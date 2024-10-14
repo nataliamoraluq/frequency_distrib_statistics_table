@@ -1,7 +1,4 @@
-Natalia ML
-
-ENUNCIADO ACT SEMANA 1 PARA DEFENDER 
-(BAJO MUTUO ACUERDO) EL VIERNES DE LA SEMANA 3
+Natalia ML -- Estadistica II -- Prof. Morelly Bullones -- Actividad n.1
 
 •	Construir la tabla de distribución de frecuencias con los siguientes datos:
 30	46	71	66	34	95	50	69	31	55	42	65	75	77	32	87	75	89	31	54

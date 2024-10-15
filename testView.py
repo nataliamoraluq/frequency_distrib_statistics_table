@@ -9,8 +9,7 @@ pd_0
 #para la curtosis - o algo asi; se define la fila y la columna q mostrara
 #vista dataframe con matplotlib
 
-"""
-import matplotlib.pyplot as plt
+"""import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
 dias = ["L","M","M","J","V","S","D"]

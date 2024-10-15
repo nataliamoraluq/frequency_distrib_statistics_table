@@ -1,7 +1,7 @@
 #MAIN CLASS
 frecuencyTable = []
-orderedData = {}
-disorderedData = {}
+orderedData = []
+disorderedData = []
 
 seeking = True 
 #variable boolean q usaremos para recorrer o "buscar" (leer) los valores a contar y ordenar
@@ -39,8 +39,18 @@ inicialData = [
     89,89,75,66,45,59,71,89,76,74,86,56,44,91,62,79,89,87,79,69
 ]
 
-for x in inicialData:
-    print(x)
+#Contar cada uno de los valores en la muestra y su fi (frecuencia absoluta / frecuencia simple)
+def countValues():
+    #using empty dictionary - frecuencia POR CADA VALOR
+    freq={}
+    for item in inicialData:
+        if(item in freq):
+            freq[item]+=1
+        else:
+            freq[item]=1
+    for valueNumber,fi in freq.items():
+        print(f"Valor: {valueNumber}, fs:{fi}")
+countValues()
 
 #DATOS TABULADOS (SIN ORDENAR)#
 

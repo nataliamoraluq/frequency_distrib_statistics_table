@@ -1,3 +1,5 @@
+import math
+
 #MAIN CLASS
 frecuencyTable = []
 orderedData = []
@@ -5,7 +7,7 @@ disorderedData = []
 
 seeking = True 
 #variable boolean q usaremos para recorrer o "buscar" (leer) los valores a contar y ordenar
-
+countN = 0
 #elementos varios
 n = 0
 xMax = 0
@@ -15,16 +17,6 @@ amplitude = 0
 logBase10 = 0 #mientras averiguo como traerme el log de base 10
 valueOfK = 0
 
-"""
-def startingCalcs():
-    #
-    rangeG = xMax - xMin
-    #
-    valueOfK = 1 + (3.3 * (logBase10 * (n)))
-    #
-    amplitude = rangeG / valueOfK
-    print(amplitude)
-"""
 
 inicialData = [
     30,46,71,66,34,95,50,69,31,55,42,65,75,77,32,87,75,89,31,54,
@@ -48,9 +40,22 @@ def countValues():
             freq[item]+=1
         else:
             freq[item]=1
+    countN += freq.values
     for valueNumber,fi in freq.items():
         print(f"Valor: {valueNumber}, fs:{fi}")
 countValues()
+#
+def startingCalcs():
+    #
+    #rangeG = xMax - xMin
+    #
+    n = countN
+    valueOfK = 1 + (3.3 * (math.log10 * n))
+    #
+    #amplitude = rangeG / valueOfK
+    #print(amplitude)
+    print(valueOfK)
+startingCalcs()
 
 #DATOS TABULADOS (SIN ORDENAR)#
 

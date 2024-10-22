@@ -17,7 +17,7 @@ amplitude = 0
 logBase10 = 0 #mientras averiguo como traerme el log de base 10
 valueOfK = 0
 
-
+#DATOS TABULADOS (SIN ORDENAR)#
 inicialData = [
     30,46,71,66,34,95,50,69,31,55,42,65,75,77,32,87,75,89,31,54,
     63,95,35,86,80,47,90,82,53,58,48,66,78,78,38,82,75,31,80,79,
@@ -57,8 +57,6 @@ def startingCalcs():
     print(valueOfK)
 startingCalcs()
 
-#DATOS TABULADOS (SIN ORDENAR)#
-
 #INTERVALOS GENERADOS POR CLASE
 
 #(PRUEBA - DESPUES DE Q SE ORDENAN, PARA CONTARLOS POR INTERVALO)
@@ -77,6 +75,7 @@ while seeking==True:
 """
 --------------------------------
 (MTC - MEDIDAS DE TENDENCIA CENTRAL)
+0.1 punto medio (mi = xi)
 1.	media aritmética, 
 2.	moda,
 3.	 mediana,

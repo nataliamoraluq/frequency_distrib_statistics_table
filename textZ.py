@@ -68,12 +68,11 @@ def menuOpc():
     print(' ----------------- MENU-------------------')
     print(' Bienvenido! Elija una de las sig. opciones: ')
     print(' --------------------------------------------')
-    print('1.) x')
+    print('1.) generar tabla de frecuencia (solo f1)')
     print('2.) 2')
     print('3.) 3')
     print('4.) 4')
     print('5.) 5')
-    print('6.) Cerrar menu')
     print(' ---------------------------------------')
     resp = input('6.) Salir del menu\n')
     if resp == '1':

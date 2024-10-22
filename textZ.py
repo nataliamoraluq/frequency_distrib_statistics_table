@@ -15,28 +15,28 @@ datos = [
     89,89,75,66,45,59,71,89,76,74,86,56,44,91,62,79,89,87,79,69
 ]
 
+#print(f" xyz {x}")
+
 def tabla_frecuencia(datos):
     print("--------- PRUEBA CALCS INICIALES E INTERVALOS--------------")
     print("-----------------------")
     print("----------- PRIMEROS CALCS ------------")
-    # 1. Encontrar el rango de los datos
-    rango = max(datos) - min(datos)
-    print("Rango: R = ")
-    print(rango)
-    # 2. Determinar el número de clases (k)
-    # Usando la regla de Sturges: k = 1 + 3.3 * log(n)
+    # 1) Se define n (200 datos de la muestra dada) y encontramos el rango
     n = len(datos)
-    print("n =")
-    print(n)
+    print(f" muestra de n = {n}")
+    #
+    rango = max(datos) - min(datos)
+    print(f" Rango R = {rango}")
+    #print(rango)
+    # 2) Determinamos el número de clases (k) usando la regla de Sturges: k = 1 + 3.3 * log(n)
     k = int(round(1 + 3.33* math.log10(200)))
     #k = int(1 + 3.332* math.log10(n))
-    print("k =")
-    print(k)
+    print(f" k = {k}")
+    #print(k)
     # 3. Calcular el ancho de clase (h) ---> h = A (amplitud)
     h = round(rango / k)
     print("-----------------------")
-    print("A =")
-    print(h)
+    print(f" A = {h}")
     print("-----------------------")
     # 4. Crear los límites de clase
     # límites de clase con intervalos cerrados a la derecha
@@ -51,12 +51,64 @@ def tabla_frecuencia(datos):
         frecuencias.append((limites_clase[i], limites_clase[i + 1], frecuencia))
 
     return frecuencias
-# Calcular la tabla de frecuencia
-tabla = tabla_frecuencia(datos)
-# Mostrar la tabla
-print("---------------------")
-print("Intervalos de Clase | Frecuencia1 (fi)")
-print("---------------------")
-for limite_inf, limite_sup, frecuencia in tabla:
-    print(f"{limite_inf} - {limite_sup} | {frecuencia}")
-    print("------------------------------------------------")
+
+def printTable():
+    # Calc tabla de distribuc. frecuencia
+    tabla = tabla_frecuencia(datos)
+    # Mostrar la tabla
+    print("---------------------")
+    print("Intervalos de Clase | (fi)")
+    print("---------------------")
+    for limite_inf, limite_sup, frecuencia in tabla:
+        print(f"({limite_inf} - {limite_sup}] | {frecuencia}")
+        print("------------------------------------------------")
+
+def menuOpc():
+    #menu de opciones
+    print(' ----------------- MENU-------------------')
+    print(' Bienvenido! Elija una de las sig. opciones: ')
+    print(' --------------------------------------------')
+    print('1.) x')
+    print('2.) 2')
+    print('3.) 3')
+    print('4.) 4')
+    print('5.) 5')
+    print('6.) Cerrar menu')
+    print(' ---------------------------------------')
+    resp = input('6.) Salir del menu\n')
+    if resp == '1':
+        print(printTable())
+        print(' --------------------------------------------------------------------')
+        opc = input('Desea volver al menu? 1)Si 2)No\n')
+        if (opc=='1'):
+            menuOpc()
+        else:
+            print('Cerrando...')
+    elif resp == '2': 
+        print(' --------------------------------------------------------------------')
+        opc = input('Desea volver al menu? 1)Si 2)No\n')
+        if (opc=='1'):
+            menuOpc()
+        else:
+            print('Cerrando...')
+    elif resp == '3': 
+        print("aqui va la opc 3")
+        #lista = defKruskal
+    elif resp == '4': 
+        print("aqui va la opc 4")
+        #lista = defPrim
+    elif resp == '5': 
+        print("aqui va la opc 5")
+    elif resp == '6': 
+        print('Cerrando...')
+    else: print('Err0r')
+
+
+def main():
+    print('[------------------------------------------]')
+    print('[**** FREQUENCY DISTRIBUT. TABLE -- STATISTICS II ****]')
+    print('[------------------------------------------]')
+    menuOpc()
+
+if __name__ == '__main__': 
+    main()

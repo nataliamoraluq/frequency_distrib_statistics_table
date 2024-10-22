@@ -7,7 +7,7 @@ disorderedData = []
 
 seeking = True 
 #variable boolean q usaremos para recorrer o "buscar" (leer) los valores a contar y ordenar
-countN = 0
+global countN
 #elementos varios
 n = 0
 xMax = 0
@@ -40,7 +40,7 @@ def countValues():
             freq[item]+=1
         else:
             freq[item]=1
-    countN += freq.values
+    countN += freq.values[item]
     for valueNumber,fi in freq.items():
         print(f"Valor: {valueNumber}, fs:{fi}")
 countValues()
@@ -62,7 +62,7 @@ startingCalcs()
 #INTERVALOS GENERADOS POR CLASE
 
 #(PRUEBA - DESPUES DE Q SE ORDENAN, PARA CONTARLOS POR INTERVALO)
-"""while seeking==True:
+while seeking==True:
     for valueX in orderedData:
         #sea intervalX el intervalo definido
         A = 45,
@@ -71,7 +71,7 @@ startingCalcs()
         if valueX in range(intervalX[0], intervalX[1]):
             print("")
         else:
-            print("")"""
+            print("")
 
 #CALCULOS
 """

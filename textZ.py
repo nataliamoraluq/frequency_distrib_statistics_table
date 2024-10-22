@@ -76,7 +76,7 @@ def menuOpc():
     print(' ---------------------------------------')
     resp = input('6.) Salir del menu\n')
     if resp == '1':
-        print(printTable())
+        printTable()
         print(' --------------------------------------------------------------------')
         opc = input('Desea volver al menu? 1)Si 2)No\n')
         if (opc=='1'):

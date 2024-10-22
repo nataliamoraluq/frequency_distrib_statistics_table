@@ -59,3 +59,4 @@ print("Intervalos de Clase | Frecuencia1 (fi)")
 print("---------------------")
 for limite_inf, limite_sup, frecuencia in tabla:
     print(f"{limite_inf} - {limite_sup} | {frecuencia}")
+    print("------------------------------------------------")

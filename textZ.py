@@ -44,11 +44,14 @@ def tabla_frecuencia(datos):
     limites_clase = [30 + i * 8 for i in range(10)]
 
     # 5. Crear la tabla de frecuencia
+
     frecuencias = []
+    frecuencia_acumulada = 0
     for i in range(k):
         # Contar la frecuencia de datos en cada clase
         frecuencia = len([x for x in datos if limites_clase[i] <= x < limites_clase[i + 1]])
-        frecuencias.append((limites_clase[i], limites_clase[i + 1], frecuencia))
+        frecuencia_acumulada += frecuencia
+        frecuencias.append((limites_clase[i], limites_clase[i + 1], frecuencia, frecuencia_acumulada))
 
     return frecuencias
 
@@ -57,10 +60,10 @@ def printTable():
     tabla = tabla_frecuencia(datos)
     # Mostrar la tabla
     print("---------------------")
-    print("Intervalos de Clase | (fi)")
+    print("Intervalos de Clase | (fi) | (fa)")
     print("---------------------")
-    for limite_inf, limite_sup, frecuencia in tabla:
-        print(f"({limite_inf} - {limite_sup}] | {frecuencia}")
+    for limite_inf, limite_sup, frecuencia, frecuencia_acumulada in tabla:
+        print(f"[{limite_inf} - {limite_sup}) | {frecuencia} | {frecuencia_acumulada}")
         print("------------------------------------------------")
 
 def menuOpc():

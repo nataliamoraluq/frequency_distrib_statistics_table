@@ -3,7 +3,8 @@
 import math
 # datos agrupados -- entrada
 tabla = []
-#mi = 0
+mediaTot = []
+#media aritmetica
 datos = [
     30,46,71,66,34,95,50,69,31,55,42,65,75,77,32,87,75,89,31,54,
     63,95,35,86,80,47,90,82,53,58,48,66,78,78,38,82,75,31,80,79,
@@ -51,6 +52,7 @@ def tabla_frecuencia(datos):
     # 5. Crear la tabla de frecuencia
     datosTabla = []
     facum = 0
+    media = 0
     for i in range(k):
         # Contar la frecuencia de datos en cada clase
         fi = len([x for x in datos if limites_clase[i] <= x < limites_clase[i + 1]])
@@ -58,8 +60,14 @@ def tabla_frecuencia(datos):
         facum += fi
         #
         xi = calcPuntoMedio(limites_clase[i], limites_clase[i + 1])
+        #media por intervalo
+        mediaPerInt = medAritmetica(limites_clase[i], xi)
+        media += mediaPerInt
         #
-        datosTabla.append((limites_clase[i], limites_clase[i + 1], fi, facum, xi))
+        datosTabla.append((limites_clase[i], limites_clase[i + 1], fi, facum, xi, mediaPerInt))
+    
+    mediaTot.append((media / 200))
+    #datosTabla.append(mediaTot)
     return datosTabla
 
 def calcPuntoMedio(li, ls):
@@ -68,6 +76,9 @@ def calcPuntoMedio(li, ls):
     #se recibe por parametro el li, el ls y se divide entre 2
     #el met retorna el valor de mi que llamamos en el met tabla_frecuencia, y se agrega a la
     #tabla junto con los demas valores
+
+def medAritmetica(fi, xi):
+    return fi * xi
     
 
 def printTable():
@@ -75,12 +86,16 @@ def printTable():
     tabla = tabla_frecuencia(datos)
     # Mostrar la tabla
     print("---------------------")
-    print("Intervalos de Clase | (fi) | (fa) | (xi)")
+    print("Intervalos| (fi) | (fa) | (xi)| fi * xi |")
     print("---------------------")
     #print(tabla)
-    for limInf, limSup, frecSim, frecAcum, puntoMedio in tabla:
-        print(f"[{limInf} - {limSup}) | {frecSim} | {frecAcum} | {puntoMedio}")
+    for limInf, limSup, frecSim, frecAcum, puntoMedio, mediaPorInt in tabla:
+        print(f"[{limInf} - {limSup}) | {frecSim} | {frecAcum} | {puntoMedio}| {mediaPorInt} |")
+    print(f"Media aritmetica: {mediaTot}")
+    """for x in tabla:
+        print(f"Media aritmetica: {x[1]}")
         print("------------------------------------------------")
+    #print (f"Media aritmetica: {mediaTot}")"""
 
 def menuOpc():
     #menu de opciones

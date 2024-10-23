@@ -22,8 +22,6 @@ def printMuestra():
     print("Muestra con datos agrupados (200) no ordenados")
     print(datos)
 
-#print(f" xyz {x}")
-
 def tabla_frecuencia(datos):
     print("--------- PRUEBA CALCS INICIALES E INTERVALOS--------------")
     print("-----------------------")
@@ -61,17 +59,18 @@ def tabla_frecuencia(datos):
         #
         xi = calcPuntoMedio(limites_clase[i], limites_clase[i + 1])
         #media por intervalo
-        mediaPerInt = medAritmetica(limites_clase[i], xi)
+        mediaPerInt = medAritmetica(fi, xi)
         media += mediaPerInt
+        
         #
         datosTabla.append((limites_clase[i], limites_clase[i + 1], fi, facum, xi, mediaPerInt))
-    
-    mediaTot.append((media / 200))
+    print(f"media sumada sin dividir{media}")
+    mediaTot.append(media / 200)
     #datosTabla.append(mediaTot)
     return datosTabla
 
 def calcPuntoMedio(li, ls):
-    mi = round(li + ls / 2)
+    mi = round(li + ls) / 2
     return mi
     #se recibe por parametro el li, el ls y se divide entre 2
     #el met retorna el valor de mi que llamamos en el met tabla_frecuencia, y se agrega a la

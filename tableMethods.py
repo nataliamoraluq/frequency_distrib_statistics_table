@@ -2,6 +2,8 @@
 #los mismos q los intervalos creados por la prof
 import math
 # datos agrupados -- entrada
+tabla = []
+#mi = 0
 datos = [
     30,46,71,66,34,95,50,69,31,55,42,65,75,77,32,87,75,89,31,54,
     63,95,35,86,80,47,90,82,53,58,48,66,78,78,38,82,75,31,80,79,
@@ -14,6 +16,10 @@ datos = [
     74,67,93,66,44,55,82,72,54,80,94,48,34,73,61,46,76,82,64,64,
     89,89,75,66,45,59,71,89,76,74,86,56,44,91,62,79,89,87,79,69
 ]
+
+def printMuestra():
+    print("Muestra con datos agrupados (200) no ordenados")
+    print(datos)
 
 #print(f" xyz {x}")
 
@@ -42,28 +48,38 @@ def tabla_frecuencia(datos):
     # límites de clase con intervalos cerrados a la derecha
     # (es decir, el límite superior de cada clase está incluido)
     limites_clase = [30 + i * 8 for i in range(10)]
-
     # 5. Crear la tabla de frecuencia
-
-    frecuencias = []
-    frecuencia_acumulada = 0
+    datosTabla = []
+    facum = 0
     for i in range(k):
         # Contar la frecuencia de datos en cada clase
-        frecuencia = len([x for x in datos if limites_clase[i] <= x < limites_clase[i + 1]])
-        frecuencia_acumulada += frecuencia
-        frecuencias.append((limites_clase[i], limites_clase[i + 1], frecuencia, frecuencia_acumulada))
+        fi = len([x for x in datos if limites_clase[i] <= x < limites_clase[i + 1]])
+        #
+        facum += fi
+        #
+        xi = calcPuntoMedio(limites_clase[i], limites_clase[i + 1])
+        #
+        datosTabla.append((limites_clase[i], limites_clase[i + 1], fi, facum, xi))
+    return datosTabla
 
-    return frecuencias
+def calcPuntoMedio(li, ls):
+    mi = round(li + ls / 2)
+    return mi
+    #se recibe por parametro el li, el ls y se divide entre 2
+    #el met retorna el valor de mi que llamamos en el met tabla_frecuencia, y se agrega a la
+    #tabla junto con los demas valores
+    
 
 def printTable():
     # Calc tabla de distribuc. frecuencia
     tabla = tabla_frecuencia(datos)
     # Mostrar la tabla
     print("---------------------")
-    print("Intervalos de Clase | (fi) | (fa)")
+    print("Intervalos de Clase | (fi) | (fa) | (xi)")
     print("---------------------")
-    for limite_inf, limite_sup, frecuencia, frecuencia_acumulada in tabla:
-        print(f"[{limite_inf} - {limite_sup}) | {frecuencia} | {frecuencia_acumulada}")
+    #print(tabla)
+    for limInf, limSup, frecSim, frecAcum, puntoMedio in tabla:
+        print(f"[{limInf} - {limSup}) | {frecSim} | {frecAcum} | {puntoMedio}")
         print("------------------------------------------------")
 
 def menuOpc():
@@ -71,14 +87,23 @@ def menuOpc():
     print(' ----------------- MENU-------------------')
     print(' Bienvenido! Elija una de las sig. opciones: ')
     print(' --------------------------------------------')
-    print('1.) generar tabla de frecuencia (solo f1)')
+    print('0.) Mostrar la muestra dada')
+    print('1.) Generar tabla de frecuencia con los datos de la muestra')
     print('2.) 2')
     print('3.) 3')
     print('4.) 4')
     print('5.) 5')
     print(' ---------------------------------------')
     resp = input('6.) Salir del menu\n')
-    if resp == '1':
+    if resp == '0':
+        printMuestra()
+        print(' --------------------------------------------------------------------')
+        opc = input('Desea volver al menu? 1)Si 2)No\n')
+        if (opc=='1'):
+            menuOpc()
+        else:
+            print('Cerrando...')
+    elif resp == '1':
         printTable()
         print(' --------------------------------------------------------------------')
         opc = input('Desea volver al menu? 1)Si 2)No\n')

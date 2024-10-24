@@ -8,7 +8,7 @@ mediaTot = [] #array media aritmetica
 medidasTC = [] #resultados medidas de tendencia central
 
 medidasDV = [] #resultados medidas de variabilidad
-
+"""
 def tryArray():
     media = "12"
     mediana = "12.5"
@@ -17,7 +17,8 @@ def tryArray():
     medidasTC.append(({"media aritmetica":media}, {"mediana":mediana}, {"moda1":moda1}))
     for posi in medidasTC:
         print(f"Medidas{posi[0]}, {posi[1]}, {posi[2]}")
-
+"""
+        
 #muestra
 datos = [
     30,46,71,66,34,95,50,69,31,55,42,65,75,77,32,87,75,89,31,54,
@@ -86,7 +87,14 @@ def tabla_frecuencia(datos):
     print(f"media sumada sin dividir{media}")
     #
     #
-    mediaTot.append(media / 200)
+    xArit = media / n
+    medidasTC.append(xArit)
+    print("-----------------------")
+    print(f"media arit: {xArit}")
+    mediana = pruebaMediana(datosTabla, n, hAmplitud, k)
+    medidasTC.append(mediana)
+    print("-----------------------")
+    print(f"mediana: {mediana}")
     #datosTabla.append(mediaTot)
     return datosTabla
 
@@ -102,24 +110,24 @@ def medAritmetica(fi, xi):
 
 #ARREGLAR Y PROBAR! also, corregir uno q otros detalles
 
-"""
-def pruebaMediana():
-    n = len(datos)
+
+def pruebaMediana(tabla, n, a, k):
+    #n = len(datos)
     #por posic
     temp = n/2
     index = 0
-
     for i in range(k):
-        if table[i][3] >= temp:
+        if tabla[i][3] >= temp:
             index = i
             break
 
-    li = table[index][0]
-    fi = table[index][2]
-    Fi = 0 if index < 0 else table[index - 1][3]
+    li = tabla[index][0]
+    fi = tabla[index][2]
+    Fi = 0 if index < 0 else tabla[index - 1][3]
 
-    return li + (((temp - Fi) / fi) * a)"""
+    return li + (((temp - Fi) / fi) * a)
 
+    
 """
 def pruebaModa:
     for i in range(k):
@@ -141,7 +149,11 @@ def printTable():
     
     for limInf, limSup, frecSim, frecAcum, puntoMedio, mediaPorInt in tabla:
         print(f"[{limInf} - {limSup}) | {frecSim} | {frecAcum} | {puntoMedio}| {mediaPorInt} |")
-    print(f"Media aritmetica: {mediaTot[0]}")
+    
+    """for i in medidasTC:
+        print(f"Media aritmetica: {i[0]}")
+        print(f"Mediana: {i[1]}")"""
+    #print(f"Media aritmetica: {mediaTot[0]}")
     """for x in tabla:
         print(f"Media aritmetica: {x[1]}")
         print("------------------------------------------------")

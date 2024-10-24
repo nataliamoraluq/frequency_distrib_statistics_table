@@ -1,10 +1,15 @@
 #probando hasta q los intervalos generados por el programa sean
 #los mismos q los intervalos creados por la prof
 import math
-# datos agrupados -- entrada
+# tabla
 tabla = []
-mediaTot = []
-#media aritmetica
+mediaTot = [] #array media aritmetica
+
+medidasTC = [] #resultados medidas de tendencia central
+
+medidasDV = [] #resultados medidas de variabilidad
+
+#muestra
 datos = [
     30,46,71,66,34,95,50,69,31,55,42,65,75,77,32,87,75,89,31,54,
     63,95,35,86,80,47,90,82,53,58,48,66,78,78,38,82,75,31,80,79,
@@ -30,6 +35,9 @@ def tabla_frecuencia(datos):
     n = len(datos)
     print(f" muestra de n = {n}")
     #
+    xMax = max(datos) 
+    xMin = min(datos)
+    
     rango = max(datos) - min(datos)
     print(f" Rango R = {rango}")
     #print(rango)
@@ -39,9 +47,9 @@ def tabla_frecuencia(datos):
     print(f" k = {k}")
     #print(k)
     # 3. Calcular el ancho de clase (h) ---> h = A (amplitud)
-    h = round(rango / k)
+    hAmplitud = round(rango / k)
     print("-----------------------")
-    print(f" A = {h}")
+    print(f" A = {hAmplitud}")
     print("-----------------------")
     # 4. Crear los límites de clase
     # límites de clase con intervalos cerrados a la derecha
@@ -65,6 +73,8 @@ def tabla_frecuencia(datos):
         #
         datosTabla.append((limites_clase[i], limites_clase[i + 1], fi, facum, xi, mediaPerInt))
     print(f"media sumada sin dividir{media}")
+    #
+    #
     mediaTot.append(media / 200)
     #datosTabla.append(mediaTot)
     return datosTabla
@@ -78,16 +88,46 @@ def calcPuntoMedio(li, ls):
 
 def medAritmetica(fi, xi):
     return fi * xi
-    
+
+#ARREGLAR Y PROBAR! also, corregir uno q otros detalles
+
+"""
+def pruebaMediana():
+    n = len(datos)
+    #por posic
+    temp = n/2
+    index = 0
+
+    for i in range(k):
+        if table[i][3] >= temp:
+            index = i
+            break
+
+    li = table[index][0]
+    fi = table[index][2]
+    Fi = 0 if index < 0 else table[index - 1][3]
+
+    return li + (((temp - Fi) / fi) * a)"""
+
+"""
+def pruebaModa:
+    for i in range(k):
+        if table[i][2] == moda:
+            d1 = table[i][2] - (0 if (i<=0) else table[i-1][2])
+            d2 = table[i][2] - (0 if (i<=0) else table[i+1][2])
+            result.append(table[i][0] + (d1 / (d1+d2)) * a)
+"""
 
 def printTable():
     # Calc tabla de distribuc. frecuencia
     tabla = tabla_frecuencia(datos)
     # Mostrar la tabla
+    print("tabla posic")
+    print(tabla[0][0])
     print("---------------------")
     print("Intervalos| (fi) | (fa) | (xi)| fi * xi |")
     print("---------------------")
-    #print(tabla)
+    
     for limInf, limSup, frecSim, frecAcum, puntoMedio, mediaPorInt in tabla:
         print(f"[{limInf} - {limSup}) | {frecSim} | {frecAcum} | {puntoMedio}| {mediaPorInt} |")
     print(f"Media aritmetica: {mediaTot}")

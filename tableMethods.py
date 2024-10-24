@@ -9,6 +9,15 @@ medidasTC = [] #resultados medidas de tendencia central
 
 medidasDV = [] #resultados medidas de variabilidad
 
+def tryArray():
+    media = "12"
+    mediana = "12.5"
+    moda1 = "15"
+
+    medidasTC.append(({"media aritmetica":media}, {"mediana":mediana}, {"moda1":moda1}))
+    for posi in medidasTC:
+        print(f"Medidas{posi[0]}, {posi[1]}, {posi[2]}")
+
 #muestra
 datos = [
     30,46,71,66,34,95,50,69,31,55,42,65,75,77,32,87,75,89,31,54,
@@ -28,7 +37,7 @@ def printMuestra():
     print(datos)
 
 def tabla_frecuencia(datos):
-    print("--------- PRUEBA CALCS INICIALES E INTERVALOS--------------")
+    #print("--------- PRUEBA CALCS INICIALES E INTERVALOS--------------")
     print("-----------------------")
     print("----------- PRIMEROS CALCS ------------")
     # 1) Se define n (200 datos de la muestra dada) y encontramos el rango
@@ -37,6 +46,8 @@ def tabla_frecuencia(datos):
     #
     xMax = max(datos) 
     xMin = min(datos)
+
+    print(f" Xmin = {xMin} & Xmax = {xMax}")
     
     rango = max(datos) - min(datos)
     print(f" Rango R = {rango}")
@@ -54,7 +65,7 @@ def tabla_frecuencia(datos):
     # 4. Crear los límites de clase
     # límites de clase con intervalos cerrados a la derecha
     # (es decir, el límite superior de cada clase está incluido)
-    limites_clase = [30 + i * 8 for i in range(10)]
+    limites_clase = [xMin + i * hAmplitud for i in range(k+1)]
     # 5. Crear la tabla de frecuencia
     datosTabla = []
     facum = 0
@@ -130,7 +141,7 @@ def printTable():
     
     for limInf, limSup, frecSim, frecAcum, puntoMedio, mediaPorInt in tabla:
         print(f"[{limInf} - {limSup}) | {frecSim} | {frecAcum} | {puntoMedio}| {mediaPorInt} |")
-    print(f"Media aritmetica: {mediaTot}")
+    print(f"Media aritmetica: {mediaTot[0]}")
     """for x in tabla:
         print(f"Media aritmetica: {x[1]}")
         print("------------------------------------------------")
@@ -166,6 +177,7 @@ def menuOpc():
         else:
             print('Cerrando...')
     elif resp == '2': 
+        tryArray()
         print(' --------------------------------------------------------------------')
         opc = input('Desea volver al menu? 1)Si 2)No\n')
         if (opc=='1'):

@@ -148,13 +148,16 @@ def pruebaModa(tabla, k, a):
     for i in range(k):
         if tabla[i][2] > moda:
             moda = tabla[i][2]
-
+    #
     for i in range(k):
         if tabla[i][2] == moda:
             d1 = tabla[i][2] - (0 if (i<=0) else tabla[i-1][2])
-            
             d2 = tabla[i][2] - (0 if (i<=0) else tabla[i+1][2])
-            modas.append(tabla[i][0] + ((d1 / (d1+d2)) * a))
+            if d1== 0 and d2 == 0:
+                modas.append(tabla[i][0] + a)
+                print(f"Alerta! como d1 y d2 = 0, (0/0+0) el valor de esta op. sera: 1")
+            else:
+                modas.append(tabla[i][0] + ((d1 / (d1+d2)) * a))
             
 
     

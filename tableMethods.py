@@ -9,17 +9,15 @@
 -----------------------------------------
 (MDV - MEDIDAS DE VARIABILIDAD)
 -----------------------------------------
-4.	 varianza,
-5.	 desviación típica.
-6.	P65
-7.	Q3
-8.	D3
-9.	D8
-10.	Q1
-12.	Rango intercuartil
-13. CV
-14.	Índice de asimetría
-15.	Curtosis
+4.	 varianza; ((sum(fi * xi2cuadrado) / n) - (xArit)2cuadrado)
+5.	 desviación típica; raiz de s2cuadrado
+6.	P65; li65 + ((((n * (k/100)) - (Fi - 1)) / fi) * A)
+7.	Q1, Q3; 
+8.	D3, D8; 
+12.	Rango intercuartil; (Q3 - Q1)
+13. CV; S / xArit
+14.	Índice de asimetría; ((3 * (xArit - Med)) / S ) Si As = 0, {o Si As !=0 then Si As > 0, Si As < 0
+15.	Curtosis; ((P75 - P25) / (P90 - P10)) * 0.5
 -----------------------------------------
 """
 
@@ -29,23 +27,10 @@ import math
 # tabla
 tabla = []
 
-modas = []
-
+modas = [] #array modas
 mediaTot = [] #array media aritmetica
-
 medidasTC = [] #resultados medidas de tendencia central
-
 medidasDV = [] #resultados medidas de variabilidad
-"""
-def tryArray():
-    media = "12"
-    mediana = "12.5"
-    moda1 = "15"
-
-    medidasTC.append(({"media aritmetica":media}, {"mediana":mediana}, {"moda1":moda1}))
-    for posi in medidasTC:
-        print(f"Medidas{posi[0]}, {posi[1]}, {posi[2]}")
-"""
         
 #muestra
 datos = [
@@ -67,30 +52,32 @@ def printMuestra():
 
 def tabla_frecuencia(datos):
     #print("--------- PRUEBA CALCS INICIALES E INTERVALOS--------------")
-    print("-----------------------")
-    print("----------- PRIMEROS CALCS ------------")
+    #print("-----------------------")
+    #print("----------- PRIMEROS CALCS ------------")
     # 1) Se define n (200 datos de la muestra dada) y encontramos el rango
     n = len(datos)
-    print(f" muestra de n = {n}")
+    #print(f" muestra de n = {n}")
     #
     xMax = max(datos) 
     xMin = min(datos)
 
-    print(f" Xmin = {xMin} & Xmax = {xMax}")
+    #print(f" Xmin = {xMin} & Xmax = {xMax}")
     
     rango = max(datos) - min(datos)
-    print(f" Rango R = {rango}")
+    #print(f" Rango R = {rango}")
     #print(rango)
     # 2) Determinamos el número de clases (k) usando la regla de Sturges: k = 1 + 3.3 * log(n)
     k = int(round(1 + 3.33* math.log10(n)))
     #k = int(1 + 3.332* math.log10(n))
-    print(f" k = {k}")
+    #print(f" k = {k}")
     #print(k)
     # 3. Calcular el ancho de clase (h) ---> h = A (amplitud)
     hAmplitud = round(rango / k)
+    """
     print("-----------------------")
     print(f" A = {hAmplitud}")
-    print("-----------------------")
+    print("-----------------------")"""
+
     # 4. Crear los límites de clase
     # límites de clase con intervalos cerrados a la derecha
     # (es decir, el límite superior de cada clase está incluido)
@@ -109,32 +96,35 @@ def tabla_frecuencia(datos):
         #media por intervalo
         mediaPerInt = medAritmetica(fi, xi)
         media += mediaPerInt
-        
         #
         datosTabla.append((limites_clase[i], limites_clase[i + 1], fi, facum, xi, mediaPerInt))
-    print(f"media sumada sin dividir{media}")
+    #print(f"media sumada sin dividir{media}")
     #
     #
     xArit = media / n
     medidasTC.append(xArit)
+    """
     print("-----------------------")
-    print(f"media arit: {xArit}")
-    mediana = pruebaMediana(datosTabla, n, hAmplitud, k)
+    print(f"media arit: {xArit}")"""
+    mediana = calcMediana(datosTabla, n, hAmplitud, k)
     medidasTC.append(mediana)
+    """
     print("-----------------------")
-    print(f"mediana: {mediana}")
+    print(f"mediana: {mediana}")"""
     #
-    pruebaModa(datosTabla, k, hAmplitud)
-
+    calcModas(datosTabla, k, hAmplitud)
+    #
     medidasTC.append(modas)
-    print("-----------------------")
-    #datosTabla.append(mediaTot)
+    #print("-----------------------")
     return datosTabla
-
+#
+#
+#
 def printModas():
     for i, mod in enumerate(medidasTC[2]):
         print(f"moda nro {i+1}: {mod}")
-
+#
+#
 def calcPuntoMedio(li, ls):
     mi = round(li + ls) / 2
     return mi
@@ -142,11 +132,13 @@ def calcPuntoMedio(li, ls):
     #el met retorna el valor de mi que llamamos en el met tabla_frecuencia, y se agrega a la
     #tabla junto con los demas valores
 
+#
+#
 def medAritmetica(fi, xi):
     return fi * xi
-
-
-def pruebaMediana(tabla, n, a, k):
+#
+#
+def calcMediana(tabla, n, a, k):
     #n = len(datos)
     #por posic
     temp = n/2
@@ -155,14 +147,14 @@ def pruebaMediana(tabla, n, a, k):
         if tabla[i][3] >= temp:
             index = i
             break
-
+    #lista datos mediana
     li = tabla[index][0]
     fi = tabla[index][2]
     Fi = 0 if index < 0 else tabla[index - 1][3]
-
+    #calc mediana
     return li + (((temp - Fi) / fi) * a)
- 
-def pruebaModa(tabla, k, a):
+#
+def calcModas(tabla, k, a):
     """
             print(f" d1: {d1}")
             print(f" d2: {d2}")
@@ -183,25 +175,63 @@ def pruebaModa(tabla, k, a):
                 print(f"Alerta! como d1 y d2 = 0, (0/0+0) el valor de esta op. sera: 1")
             else:
                 modas.append(tabla[i][0] + ((d1 / (d1+d2)) * a))
-
-
+#
+"""
+-----------------------------------------
+(MDV - MEDIDAS DE VARIABILIDAD)
+-----------------------------------------
+4.	 varianza; ((sum(fi * xi2cuadrado) / n) - (xArit)2cuadrado)
+5.	 desviación típica; raiz de s2cuadrado
+6.	P65; li65 + ((((n * (k/100)) - (Fi - 1)) / fi) * A)
+7.	Q1, Q3; 
+8.	D3, D8; 
+12.	Rango intercuartil; (Q3 - Q1)
+13. CV; S / xArit
+14.	Índice de asimetría; ((3 * (xArit - Med)) / S ) Si As = 0, {o Si As !=0 then Si As > 0, Si As < 0
+15.	Curtosis; ((P75 - P25) / (P90 - P10)) * 0.5
+-----------------------------------------
+"""
+#
+def printMTC():
+    print("----------------------------------------")
+    print(f"Media aritmetica: {medidasTC[0]}")
+    print(f"Mediana: {medidasTC[1]}")
+    print(f"Modas:")
+    printModas()
+#
+#
+def printMDD():
+    print("----------------------------------------")
+    """
+    print(f"Media aritmetica: {medidasTC[0]}")
+    print(f"Mediana: {medidasTC[1]}")
+    print(f"Modas:")
+    printModas()"""
+#
+#
 def printTable():
     # Calc tabla de distribuc. frecuencia
     tabla = tabla_frecuencia(datos)
     # Mostrar la tabla
+    """
     print("tabla posic")
-    print(tabla[0][0])
-    print("---------------------")
-    print("Intervalos| (fi) | (fa) | (xi)| fi * xi |")
-    print("---------------------")
+    print(tabla[0][0])"""
+    print('-----------------------------------------')
+    print('   TABLA DE DISTRIBUC. DE FRECUENCIAS ')
+    print("----------------------------------------")
+    print("Intervalos| fi | fa | xi | fi * xi |")
+    print("----------------------------------------")
     
     for limInf, limSup, frecSim, frecAcum, puntoMedio, mediaPorInt in tabla:
         print(f"[{limInf} - {limSup}) | {frecSim} | {frecAcum} | {puntoMedio}| {mediaPorInt} |")
-    
+    print(' ')
+    printMTC()
+    """
+    print("----------------------------------------")
     print(f"Media aritmetica: {medidasTC[0]}")
     print(f"Mediana: {medidasTC[1]}")
-    print(f"Modas: ")
-    printModas()
+    print(f"Modas:")
+    printModas()"""
 
 def menuOpc():
     #menu de opciones
@@ -210,8 +240,8 @@ def menuOpc():
     print(' --------------------------------------------')
     print('0.) Mostrar la muestra dada')
     print('1.) Generar tabla de frecuencia con los datos de la muestra')
-    print('2.) 2')
-    print('3.) 3')
+    print('2.) Mostrar las Medidas de Tendencia Central')
+    print('3.) Mostrar las Medidas de Dispersion/Variabilidad')
     print('4.) 4')
     print('5.) 5')
     print(' ---------------------------------------')
@@ -233,7 +263,13 @@ def menuOpc():
         else:
             print('Cerrando...')
     elif resp == '2': 
-        tryArray()
+        #se llama al met principal para q cargue los datos y calcule las MTC
+        tabla = tabla_frecuencia(datos)
+        #
+        print('-----------------------------------------')
+        print('   MTC - MEDIDAS DE TENDENCIA CENTRAL ')
+        print('-----------------------------------------')
+        printMTC()
         print(' --------------------------------------------------------------------')
         opc = input('Desea volver al menu? 1)Si 2)No\n')
         if (opc=='1'):
@@ -241,8 +277,9 @@ def menuOpc():
         else:
             print('Cerrando...')
     elif resp == '3': 
-        print("aqui va la opc 3")
-        #lista = defKruskal
+        print('-----------------------------------------')
+        print('      MDV - MEDIDAS DE VARIABILIDAD    ')
+        print('-----------------------------------------')
     elif resp == '4': 
         print("aqui va la opc 4")
         #lista = defPrim
@@ -251,13 +288,14 @@ def menuOpc():
     elif resp == '6': 
         print('Cerrando...')
     else: print('Err0r')
-
-
+#
+#main
 def main():
-    print('[------------------------------------------]')
-    print('[**** FREQUENCY DISTRIBUT. TABLE -- STATISTICS II ****]')
-    print('[------------------------------------------]')
+    print('[______________________________________________________________]')
+    print(' ')
+    print('[_______ FREQUENCY DISTRIBUT. TABLE --- STATISTICS II _________]')
+    print('[______________________________________________________________]')
     menuOpc()
-
+#
 if __name__ == '__main__': 
     main()

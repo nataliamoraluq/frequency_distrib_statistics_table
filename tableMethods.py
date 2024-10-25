@@ -1,3 +1,28 @@
+#CALCULOS
+"""
+--------------------------------
+(MTC - MEDIDAS DE TENDENCIA CENTRAL) (all done)
+0.1 punto medio (mi = xi)
+1.	media aritmética, 
+2.	moda,
+3.	 mediana,
+-----------------------------------------
+(MDV - MEDIDAS DE VARIABILIDAD)
+-----------------------------------------
+4.	 varianza,
+5.	 desviación típica.
+6.	P65
+7.	Q3
+8.	D3
+9.	D8
+10.	Q1
+12.	Rango intercuartil
+13. CV
+14.	Índice de asimetría
+15.	Curtosis
+-----------------------------------------
+"""
+
 #probando hasta q los intervalos generados por el programa sean
 #los mismos q los intervalos creados por la prof
 import math
@@ -158,9 +183,7 @@ def pruebaModa(tabla, k, a):
                 print(f"Alerta! como d1 y d2 = 0, (0/0+0) el valor de esta op. sera: 1")
             else:
                 modas.append(tabla[i][0] + ((d1 / (d1+d2)) * a))
-            
 
-    
 
 def printTable():
     # Calc tabla de distribuc. frecuencia

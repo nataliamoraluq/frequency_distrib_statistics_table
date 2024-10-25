@@ -79,6 +79,13 @@ while seeking==True:
 1.	media aritmética, 
 2.	moda,
 3.	 mediana,
+-----------------------------------------
+"""
+
+"""
+-----------------------------------------
+(MDV - MEDIDAS DE VARIABILIDAD)
+
 4.	 varianza,
 5.	 desviación típica.
 6.	P65
@@ -86,12 +93,6 @@ while seeking==True:
 8.	D3
 9.	D8
 10.	Q1
------------------------------------------
-"""
-
-"""
------------------------------------------
-(MDV - MEDIDAS DE VARIABILIDAD)
 11.	CV
 12.	Rango intercuartil
 13.	Índice de asimetría

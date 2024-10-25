@@ -1,4 +1,5 @@
 #CALCULOS
+#JUST ALL THE METHODS DONE!!! MOVE TO THE MAIN
 """
 --------------------------------
 (MTC - MEDIDAS DE TENDENCIA CENTRAL) (all done)

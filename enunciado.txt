@@ -1,3 +1,4 @@
+"""
 // ENUNCIADO ACT SEMANA 1 PARA DEFENDER (BAJO MUTUO ACUERDO) EL VIERNES DE LA SEMANA 3
 
 Construir la tabla de distribución de frecuencias con los siguientes datos:
@@ -17,7 +18,8 @@ Donde a,b,c son los tres últimos dígitos de tu cedula de identidad,
 por ejemplo: 34.255.cba 997
 En este caso: 30.416.997
 A=9, B=9, C=7
-
+LOS ULTIMOS 5 VALORES DE LA MUESTRA SERAN:
+7a	8b	8c	7b	6a
 
 -------------(DATA CON MI ABC)-------------
 30	46	71	66	34	95	50	69	31	55	42	65	75	77	32	87	75	89	31	54
@@ -51,14 +53,4 @@ Calcular: --------------------------------
 14.	Curtosis
 //-----------------------------------------
 
-orden de programacion (agenda):
-
-1- Programar que elprograma reciba los datos tabulados
-2- Programar que se generen los intervalos por clase " (] y el ultimo []"
-3- Graficar la tabla de datos tabulados / tabla de valores (los intervalos)
-4- Comenzar a programar las MTC
-4.2- Anexar a la grafica de la tabla estas medidas
-5- Programar las MDV 
-5.2- Anexar a la grafica de la tabla estas medidas
-6- Una vez q todo funcione, menu para darle la opcion al usuario de elegir QUE quiere ver primero
-7* - (Opcional / EXTRA) graficar Curtosis, DT, CV, Indice de asimetria
+"""

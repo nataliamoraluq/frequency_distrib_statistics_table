@@ -86,6 +86,7 @@ def tabla_frecuencia(datos):
     datosTabla = []
     facum = 0
     media = 0
+    sumfixi2 = 0
     for i in range(k):
         # Contar la frecuencia de datos en cada clase
         fi = len([x for x in datos if limites_clase[i] <= x < limites_clase[i + 1]])
@@ -96,6 +97,8 @@ def tabla_frecuencia(datos):
         #media por intervalo
         mediaPerInt = medAritmetica(fi, xi)
         media += mediaPerInt
+        #varianza
+        sumfixi2 += ((fi * xi) * xi) #corregir!!!!
         #
         datosTabla.append((limites_clase[i], limites_clase[i + 1], fi, facum, xi, mediaPerInt))
     #print(f"media sumada sin dividir{media}")
@@ -115,15 +118,46 @@ def tabla_frecuencia(datos):
     calcModas(datosTabla, k, hAmplitud)
     #
     medidasTC.append(modas)
-    #print("-----------------------")
+    #
+    #
+    """
+    print("-----------------------")
+    print(f" suma de fi * xi2: {sumfixi2}")
+    print("-----------------------")"""
+    fixi2 = sumfixi2
+    s2 = varianza(n, fixi2, xArit)
+    s = desvicEstandar(s2)
+    """
+    print("-----------------------")
+    print(f"varianza: {s2} y desviac. estandar: {s}")"""
+    medidasDV.append(s2)
+    medidasDV.append(s)
+    #
+    #
+    #
     return datosTabla
 #
-#
-#
-def printModas():
-    for i, mod in enumerate(medidasTC[2]):
-        print(f"moda nro {i+1}: {mod}")
-#
+def varianza(n, fixi2, xAritmetica):
+    """
+    print("Raiz de 36:")
+    print(math.sqrt(36))
+    print("4 elevado al cuadrado: ")
+    print(math.exp2(4))
+    """
+
+    #print(f"med arit al cuadrado: {math.pow(xAritmetica, 2)}")
+
+    #sumfixi2 = sum(fi * (math.exp2(xi)))
+    if fixi2!=0 and n!=0 and xAritmetica!=0:
+        s2 =  ((fixi2 / n) - (math.pow(xAritmetica, 2)))
+        return s2
+    else:
+        print('Error! Datos vacios, revisar')
+
+
+def desvicEstandar(s2):
+    return math.sqrt(s2)
+
 #
 def calcPuntoMedio(li, ls):
     mi = round(li + ls) / 2
@@ -137,6 +171,7 @@ def calcPuntoMedio(li, ls):
 def medAritmetica(fi, xi):
     return fi * xi
 #
+
 #
 def calcMediana(tabla, n, a, k):
     #n = len(datos)
@@ -192,6 +227,12 @@ def calcModas(tabla, k, a):
 -----------------------------------------
 """
 #
+#
+def printModas():
+    for i, mod in enumerate(medidasTC[2]):
+        print(f"moda nro {i+1}: {mod}")
+#
+#
 def printMTC():
     print("----------------------------------------")
     print(f"Media aritmetica: {medidasTC[0]}")
@@ -201,12 +242,9 @@ def printMTC():
 #
 #
 def printMDD():
+    print(f"Varianza: {medidasDV[0]}")
+    print(f"Desviacion Estandar: {medidasDV[1]}")
     print("----------------------------------------")
-    """
-    print(f"Media aritmetica: {medidasTC[0]}")
-    print(f"Mediana: {medidasTC[1]}")
-    print(f"Modas:")
-    printModas()"""
 #
 #
 def printTable():
@@ -277,9 +315,12 @@ def menuOpc():
         else:
             print('Cerrando...')
     elif resp == '3': 
+        #varianza()
+        tabla = tabla_frecuencia(datos)
         print('-----------------------------------------')
         print('      MDV - MEDIDAS DE VARIABILIDAD    ')
         print('-----------------------------------------')
+        printMDD()
     elif resp == '4': 
         print("aqui va la opc 4")
         #lista = defPrim

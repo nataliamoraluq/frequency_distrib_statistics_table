@@ -125,39 +125,63 @@ def tabla_frecuencia(datos):
     print(f" suma de fi * xi2: {sumfixi2}")
     print("-----------------------")"""
     fixi2 = sumfixi2
+    # varianza y desviac estandar
     s2 = varianza(n, fixi2, xArit)
     s = desvicEstandar(s2)
+    #
     """
     print("-----------------------")
     print(f"varianza: {s2} y desviac. estandar: {s}")"""
     medidasDV.append(s2)
     medidasDV.append(s)
+
+    #coeficiente de variacion
+    cVariac = coefVariac(s, xArit)
+    #pentiles
+    """
+    p50 = quantiles(datosTabla, 50, 100, n, hAmplitud)
+    print(f"P50: {p50}")"""
+    
+    #---------------------------------------------------
+    # percentil 65
+    p65 = quantiles(datosTabla, 65, 100, n, hAmplitud)
     #
+    medidasDV.append(p65)
+    # cuartiles 1 y 3
+    q3 = quantiles(datosTabla, 3, 4, n, hAmplitud)
+    q1 = quantiles(datosTabla, 1, 4, n, hAmplitud)
+    #
+    medidasDV.append(q3)
+    medidasDV.append(q3)
+    #deciles 3 y 8
+    d3 = quantiles(datosTabla, 3, 10, n, hAmplitud)
+    d8 = quantiles(datosTabla, 8, 10, n, hAmplitud)
+    medidasDV.append(d3)
+    medidasDV.append(d8)
+    #rango intercuartil
+    rI = calcRangoInterq(q3, q1)
+    #print(f"Rango Intercuartil: {rI}")
+    medidasDV.append(rI)
+    #
+    #
+    p90 = quantiles(datosTabla, 90, 100, n, hAmplitud)
+    p75 = quantiles(datosTabla, 75, 100, n, hAmplitud)
+    #
+    p25 = quantiles(datosTabla, 25, 100, n, hAmplitud)
+    p10 = quantiles(datosTabla, 10, 100, n, hAmplitud)
+    #
+    cKurtosis = curtosis(p90, p75, p25, p10)
+    #print(f"Curtosis: {cKurtosis}")
+    medidasDV.append(cKurtosis)
+    #print(f"Coeficiente de Variacion: {cVariac}")
+    medidasDV.append(cVariac)
+
+    aS = indiceAsime(xArit, mediana, s)
+    #print(f"Indice de Asimetria: {aS}")
+    medidasDV.append(aS)
     #
     #
     return datosTabla
-#
-def varianza(n, fixi2, xAritmetica):
-    """
-    print("Raiz de 36:")
-    print(math.sqrt(36))
-    print("4 elevado al cuadrado: ")
-    print(math.exp2(4))
-    """
-
-    #print(f"med arit al cuadrado: {math.pow(xAritmetica, 2)}")
-
-    #sumfixi2 = sum(fi * (math.exp2(xi)))
-    if fixi2!=0 and n!=0 and xAritmetica!=0:
-        s2 =  ((fixi2 / n) - (math.pow(xAritmetica, 2)))
-        return s2
-    else:
-        print('Error! Datos vacios, revisar')
-
-
-def desvicEstandar(s2):
-    return math.sqrt(s2)
-
 #
 def calcPuntoMedio(li, ls):
     mi = round(li + ls) / 2
@@ -165,13 +189,31 @@ def calcPuntoMedio(li, ls):
     #se recibe por parametro el li, el ls y se divide entre 2
     #el met retorna el valor de mi que llamamos en el met tabla_frecuencia, y se agrega a la
     #tabla junto con los demas valores
-
 #
+def calcRangoInterq(q3, q1):
+    return q3 - q1
+#
+def indiceAsime(xArit, Med, S):
+    #Índice de asimetría; 
+    #((3 * (xArit - Med)) / S ) 
+    # Si As = 0, {o Si As !=0 then Si As > 0, Si As < 0
+    aS = ((3 * (xArit - Med)) / S ) 
+    """if aS==0:
+        print(f"Indice de Asimetria: {aS}; Presenta distribuc. simetrica de los datos")
+    elif aS>0:
+        print(f"Indice de Asimetria: {aS}; Presenta distribuc. asimetrica de los datos; sesgo a la der")
+    elif aS<0:
+        print(f"Indice de Asimetria: {aS}; Presenta distribuc. simetrica de los datos; sesgo a la izq")
+    else:
+        print("hola")"""
+    return aS
+
 #
 def medAritmetica(fi, xi):
     return fi * xi
 #
-
+def coefVariac(s, xArit):
+    return s / xArit
 #
 def calcMediana(tabla, n, a, k):
     #n = len(datos)
@@ -210,23 +252,56 @@ def calcModas(tabla, k, a):
                 print(f"Alerta! como d1 y d2 = 0, (0/0+0) el valor de esta op. sera: 1")
             else:
                 modas.append(tabla[i][0] + ((d1 / (d1+d2)) * a))
+#------------------------------------------------------------------
+def varianza(n, fixi2, xAritmetica):
+    if fixi2!=0 and n!=0 and xAritmetica!=0:
+        s2 =  ((fixi2 / n) - (math.pow(xAritmetica, 2)))
+        return s2
+    else:
+        print('Error! Datos vacios, revisar')
+#------------------------------------------------------------------
+def desvicEstandar(s2):
+    return math.sqrt(s2)
+
 #
+
 """
 -----------------------------------------
 (MDV - MEDIDAS DE VARIABILIDAD)
 -----------------------------------------
-4.	 varianza; ((sum(fi * xi2cuadrado) / n) - (xArit)2cuadrado)
-5.	 desviación típica; raiz de s2cuadrado
+4.	 varianza; ((sum(fi * xi2cuadrado) / n) - (xArit)2cuadrado) (done)
+5.	 desviación típica; raiz de s2cuadrado (done)
 6.	P65; li65 + ((((n * (k/100)) - (Fi - 1)) / fi) * A)
-7.	Q1, Q3; 
-8.	D3, D8; 
+7.	P65, Q1, Q3; D3, D8; 
 12.	Rango intercuartil; (Q3 - Q1)
-13. CV; S / xArit
-14.	Índice de asimetría; ((3 * (xArit - Med)) / S ) Si As = 0, {o Si As !=0 then Si As > 0, Si As < 0
-15.	Curtosis; ((P75 - P25) / (P90 - P10)) * 0.5
+
+13. CV; S / xArit (done)
+14.	Índice de asimetría; ((3 * (xArit - Med)) / S ) Si As = 0, {o Si As !=0 then Si As > 0, Si As < 0 (done)
+15.	Curtosis; ((P75 - P25) / (P90 - P10)) * 0.5 (done)
 -----------------------------------------
 """
 #
+def quantiles(tablaDatos, tempk, denom, n,a):
+    #sea denom = divisor de nk
+    # tempk = k del quantil a calcular
+    result = 0
+    #
+    nk = ((n * tempk)/ denom)
+    #print(f"n: {n} + k: {tempk}, nk: {nk}, denom: {denom}")
+    for posic, i in enumerate(tablaDatos):
+        if i[3] >= nk:
+            #print(i[3])
+            lik = i[0]
+            fi = i[2]
+            Fik = 0 if posic==0 else tablaDatos[posic-1][3]
+            result = lik + (((nk-Fik) / fi) * a)
+            break
+    #print(f" I [3]: {i[3]} , lik: {lik}, fi: {fi}, Fi - 1: {Fik}, A: {a}")
+    return result
+#
+def curtosis(p90, p75, p25, p10):
+    return ((p75 - p25) /(p90 - p10)) * 0.5
+
 #
 def printModas():
     for i, mod in enumerate(medidasTC[2]):
@@ -245,6 +320,20 @@ def printMDD():
     print(f"Varianza: {medidasDV[0]}")
     print(f"Desviacion Estandar: {medidasDV[1]}")
     print("----------------------------------------")
+    print(f"P65: {medidasDV[2]}")
+    print(f"Q1: {medidasDV[3]}")
+    print(f"Q3: {medidasDV[4]}")
+    print(f"D3: {medidasDV[5]}")
+    print(f"D8: {medidasDV[6]}")
+    print("----------------------------------------")
+    print(f"Rango Intercuartil: {medidasDV[7]}")
+    print(f"Coeficiente de variacion: {medidasDV[9]}")
+    print("----------------------------------------")
+    print(f"Indice de Asimetria: {medidasDV[10]}")
+    print("----------------------------------------")
+    print(f"Curtosis: {medidasDV[8]}")
+    print("----------------------------------------")
+
 #
 #
 def printTable():

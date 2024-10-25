@@ -1,5 +1,11 @@
 #CALCULOS
 """
+
+ERRORES A CORREGIR!!! 
+Problema con las modas
+problema con los cuartiles
+Debe tener solo 4 decimales los calculos
+
 --------------------------------
 (MTC - MEDIDAS DE TENDENCIA CENTRAL) (all done)
 0.1 punto medio (mi = xi)
@@ -449,7 +455,7 @@ Donde a,b,c son los tres últimos dígitos de tu cedula de identidad,
 por ejemplo: 34.255.cba 997
 En este caso: 30.416.997
 A=9, B=9, C=7
-LOS ULTIMOS 5 VALORES DE LA MUESTRA SERAN:
+LOS ULTIMOS 5 VALORES DE LA SERAN:
 7a	8b	8c	7b	6a
 
 -------------(DATA CON MI ABC)-------------

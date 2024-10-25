@@ -3,6 +3,9 @@
 import math
 # tabla
 tabla = []
+
+modas = []
+
 mediaTot = [] #array media aritmetica
 
 medidasTC = [] #resultados medidas de tendencia central
@@ -54,7 +57,7 @@ def tabla_frecuencia(datos):
     print(f" Rango R = {rango}")
     #print(rango)
     # 2) Determinamos el número de clases (k) usando la regla de Sturges: k = 1 + 3.3 * log(n)
-    k = int(round(1 + 3.33* math.log10(200)))
+    k = int(round(1 + 3.33* math.log10(n)))
     #k = int(1 + 3.332* math.log10(n))
     print(f" k = {k}")
     #print(k)
@@ -95,8 +98,17 @@ def tabla_frecuencia(datos):
     medidasTC.append(mediana)
     print("-----------------------")
     print(f"mediana: {mediana}")
+    #
+    pruebaModa(datosTabla, k, hAmplitud)
+
+    medidasTC.append(modas)
+    print("-----------------------")
     #datosTabla.append(mediaTot)
     return datosTabla
+
+def printModas():
+    for i, mod in enumerate(medidasTC[2]):
+        print(f"moda nro {i+1}: {mod}")
 
 def calcPuntoMedio(li, ls):
     mi = round(li + ls) / 2
@@ -107,8 +119,6 @@ def calcPuntoMedio(li, ls):
 
 def medAritmetica(fi, xi):
     return fi * xi
-
-#ARREGLAR Y PROBAR! also, corregir uno q otros detalles
 
 
 def pruebaMediana(tabla, n, a, k):
@@ -126,16 +136,28 @@ def pruebaMediana(tabla, n, a, k):
     Fi = 0 if index < 0 else tabla[index - 1][3]
 
     return li + (((temp - Fi) / fi) * a)
+ 
+def pruebaModa(tabla, k, a):
+    """
+            print(f" d1: {d1}")
+            print(f" d2: {d2}")
+            print(f" lim inf: {tabla[i][0]}")
+            print(f" a: {a}")"""
+            #print(f"moda nro {medidasTC+1}")
+    moda = 0
+    for i in range(k):
+        if tabla[i][2] > moda:
+            moda = tabla[i][2]
+
+    for i in range(k):
+        if tabla[i][2] == moda:
+            d1 = tabla[i][2] - (0 if (i<=0) else tabla[i-1][2])
+            
+            d2 = tabla[i][2] - (0 if (i<=0) else tabla[i+1][2])
+            modas.append(tabla[i][0] + ((d1 / (d1+d2)) * a))
+            
 
     
-"""
-def pruebaModa:
-    for i in range(k):
-        if table[i][2] == moda:
-            d1 = table[i][2] - (0 if (i<=0) else table[i-1][2])
-            d2 = table[i][2] - (0 if (i<=0) else table[i+1][2])
-            result.append(table[i][0] + (d1 / (d1+d2)) * a)
-"""
 
 def printTable():
     # Calc tabla de distribuc. frecuencia
@@ -150,14 +172,10 @@ def printTable():
     for limInf, limSup, frecSim, frecAcum, puntoMedio, mediaPorInt in tabla:
         print(f"[{limInf} - {limSup}) | {frecSim} | {frecAcum} | {puntoMedio}| {mediaPorInt} |")
     
-    """for i in medidasTC:
-        print(f"Media aritmetica: {i[0]}")
-        print(f"Mediana: {i[1]}")"""
-    #print(f"Media aritmetica: {mediaTot[0]}")
-    """for x in tabla:
-        print(f"Media aritmetica: {x[1]}")
-        print("------------------------------------------------")
-    #print (f"Media aritmetica: {mediaTot}")"""
+    print(f"Media aritmetica: {medidasTC[0]}")
+    print(f"Mediana: {medidasTC[1]}")
+    print(f"Modas: ")
+    printModas()
 
 def menuOpc():
     #menu de opciones

@@ -41,6 +41,8 @@ medidasDV = [] #resultados medidas de variabilidad
 #muestra con los datos agrupados
 datos = [
     30,46,71,66,34,95,50,69,31,55,42,65,75,77,32,87,75,89,31,54,
+    35,35,35,35,35,
+
     63,95,35,86,80,47,90,82,53,58,48,66,78,78,38,82,75,31,80,79,
     48,94,77,64,38,95,46,70,30,60,50,68,34,73,98,98,33,84,98,92,
     65,44,76,96,97,37,81,85,48,61,52,47,77,50,50,49,96,97,82,49,
@@ -156,7 +158,7 @@ def tabla_frecuencia(datos):
     q3 = quantiles(datosTabla, 3, 4, n, hAmplitud)
     q1 = quantiles(datosTabla, 1, 4, n, hAmplitud)
     #
-    medidasDV.append(q3)
+    medidasDV.append(q1)
     medidasDV.append(q3)
     #deciles 3 y 8
     d3 = quantiles(datosTabla, 3, 10, n, hAmplitud)
@@ -228,7 +230,8 @@ def calcModas(tabla, k, a):
     for i in range(k):
         if tabla[i][2] == moda:
             d1 = tabla[i][2] - (0 if (i<=0) else tabla[i-1][2])
-            d2 = tabla[i][2] - (0 if (i<=0) else tabla[i+1][2])
+            d2 = tabla[i][2] - (0 if (i>=(len(tabla)-1)) else tabla[i+1][2])
+            print(f" d1: {d1}, d2: {d2}")
             if d1== 0 and d2 == 0:
                 modas.append(tabla[i][0] + a)
                 print(f"Alerta! como d1 y d2 = 0, (0/0+0) el valor de esta op. sera: 1")

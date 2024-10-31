@@ -430,7 +430,8 @@ def menuPropOpc(age, income, hours):
         else:
             print('Cerrando...')
     elif resp == '1':
-        tabla_frecuencia(age), 
+        #tabla_frecuencia(age),
+        printTable(age) 
         print(' --------------------------------------------------------------------')
         opc = input('Desea volver al menu? 1)Si 2)No\n')
         if (opc=='1'):
@@ -461,7 +462,7 @@ def menuPropOpc(age, income, hours):
     else: print('Err0r')
 #-------------------------------------------------------------
 #main
-def main():
+def main(ageList, incomeList, hoursWkList):
     print('[______________________________________________________________]')
     print(' ')
     print('[_______ FREQUENCY DISTRIBUT. TABLE --- STATISTICS II _________]')
@@ -478,15 +479,15 @@ def main():
         print(' --------------------------------------------------------------------')
         opc = input('Desea volver al menu? 1)Si 2)No\n')
         if (opc=='1'):
-            menuPropOpc()
+            main(ageList, incomeList, hoursWkList)
         else:
             print('Cerrando...')
     elif resp == '2':
-        menuPropOpc()
+        menuPropOpc(ageList, incomeList, hoursWkList)
         print(' --------------------------------------------------------------------')
         opc = input('Desea volver al menu? 1)Si 2)No\n')
         if (opc=='1'):
-            menuPropOpc()
+            main(ageList, incomeList, hoursWkList)
         else:
             print('Cerrando...')
     elif resp == '3':
@@ -508,7 +509,6 @@ healthInsuranceList = []
 languageList = []
 # ------------_-------------------------_-----------------
 if __name__ == '__main__': 
-    main()
     with open("DBdatosProyecto2024.csv", newline='') as csvFile:
         spamreader = csv.reader(csvFile, delimiter=' ', quotechar=' ')
         i = 0
@@ -530,7 +530,7 @@ if __name__ == '__main__':
     tableAge = tabla_frecuencia(ageList)
     tableHoursOW = tabla_frecuencia(hoursWkList)
     tableIncome = tabla_frecuencia(incomeList)"""
-    menuPropOpc(ageList, incomeList, hoursWkList)
+    main(ageList, incomeList, hoursWkList)
 
     
 #

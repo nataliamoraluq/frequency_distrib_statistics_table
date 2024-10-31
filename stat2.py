@@ -282,22 +282,22 @@ def printMuestra():
     print(datos)
 #
 # ----- MET. IMPRIMIR - MODAS------
-def printModas():
+def printModas(medidasTC):
     for i, mod in enumerate(medidasTC[2]):
         print(f"moda nro {i+1}: {mod}")
 #
 # ----- MET. IMPRIMIR - MTC------
 #
-def printMTC():
+def printMTC(medidasTC):
     print("----------------------------------------")
     print(f"Media aritmetica: {medidasTC[0]}")
     print(f"Mediana: {medidasTC[1]}")
     print(f"Modas:")
-    printModas()
+    printModas(medidasTC)
 #
 #
 # ----- MET. IMPRIMIR - MDD------
-def printMDD():
+def printMDD(medidasDV):
     print(f"Varianza: {medidasDV[0]}")
     print(f"Desviacion Estandar: {medidasDV[1]}")
     print("----------------------------------------")
@@ -377,7 +377,7 @@ def menuFreqOpc():
         #
         print('-----------------------------------------')
         print('   MTC - MEDIDAS DE TENDENCIA CENTRAL ')
-        printMTC()
+        printMTC(medidasTC)
         print(' --------------------------------------------------------------------')
         opc = input('Desea volver al menu? 1)Si 2)No\n')
         if (opc=='1'):
@@ -389,7 +389,7 @@ def menuFreqOpc():
         tabla = tabla_frecuencia(datos)
         print('-----------------------------------------')
         print('      MDV - MEDIDAS DE VARIABILIDAD    ')
-        printMDD()
+        printMDD(medidasDV)
         opc = input('Desea volver al menu? 1)Si 2)No\n')
         if (opc=='1'):
             menuFreqOpc()
@@ -433,6 +433,7 @@ def menuPropOpc(age, income, hours):
         #tabla_frecuencia(age),
         printTable(age) 
         print(' --------------------------------------------------------------------')
+        #NOTA!! agregar un menu para mostrar las MTC y MDD para c/u de estas
         opc = input('Desea volver al menu? 1)Si 2)No\n')
         if (opc=='1'):
             menuPropOpc()
@@ -440,7 +441,7 @@ def menuPropOpc(age, income, hours):
             print('Cerrando...')
     elif resp == '2': 
         #se llama al met principal para q cargue los datos y calcule las MTC
-        tabla_frecuencia(income)
+        printTable(income)
         #
         print(' --------------------------------------------------------------------')
         opc = input('Desea volver al menu? 1)Si 2)No\n')
@@ -450,7 +451,7 @@ def menuPropOpc(age, income, hours):
             print('Cerrando...')
     elif resp == '3': 
         #varianza()
-        tabla_frecuencia(hours)
+        printTable(hours)
         print('-----------------------------------------')
         opc = input('Desea volver al menu? 1)Si 2)No\n')
         if (opc=='1'):

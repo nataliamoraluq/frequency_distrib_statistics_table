@@ -15,8 +15,6 @@ medidasDV = [] #resultados medidas de variabilidad
 #muestra con los datos agrupados
 datos = [
     30,46,71,66,34,95,50,69,31,55,42,65,75,77,32,87,75,89,31,54,
-    35,35,35,35,35,
-
     63,95,35,86,80,47,90,82,53,58,48,66,78,78,38,82,75,31,80,79,
     48,94,77,64,38,95,46,70,30,60,50,68,34,73,98,98,33,84,98,92,
     65,44,76,96,97,37,81,85,48,61,52,47,77,50,50,49,96,97,82,49,
@@ -128,12 +126,17 @@ def tabla_frecuencia(datos):
     p65 = quantiles(datosTabla, 65, 100, n, hAmplitud)
     #
     medidasDV.append(p65)
-    # cuartiles 1 y 3
-    q3 = quantiles(datosTabla, 3, 4, n, hAmplitud)
+    # cuartiles 1, 2, 3, 4
     q1 = quantiles(datosTabla, 1, 4, n, hAmplitud)
+    q2 = quantiles(datosTabla, 2, 4, n, hAmplitud)
+    
+    q3 = quantiles(datosTabla, 3, 4, n, hAmplitud)
+    q4 = quantiles(datosTabla, 4, 4, n, hAmplitud)
     #
     medidasDV.append(q1)
+    medidasDV.append(q2)
     medidasDV.append(q3)
+    medidasDV.append(q4)
     #deciles 3 y 8
     d3 = quantiles(datosTabla, 3, 10, n, hAmplitud)
     d8 = quantiles(datosTabla, 8, 10, n, hAmplitud)
@@ -302,17 +305,22 @@ def printMDD(medidasDV):
     print(f"Desviacion Estandar: {medidasDV[1]}")
     print("----------------------------------------")
     print(f"P65: {medidasDV[2]}")
+    print("----------------------------------------")
     print(f"Q1: {medidasDV[3]}")
-    print(f"Q3: {medidasDV[4]}")
-    print(f"D3: {medidasDV[5]}")
-    print(f"D8: {medidasDV[6]}")
+    print(f"Q2: {medidasDV[4]}")
+    """"""
+    print(f"Q3: {medidasDV[5]}")
+    print(f"Q4: {medidasDV[6]}")
     print("----------------------------------------")
-    print(f"Rango Intercuartil: {medidasDV[7]}")
-    print(f"Coeficiente de variacion: {medidasDV[9]}")
+    print(f"D3: {medidasDV[7]}")
+    print(f"D8: {medidasDV[8]}")
     print("----------------------------------------")
-    print(f"Indice de Asimetria: {medidasDV[10]}")
+    print(f"Rango Intercuartil: {medidasDV[9]}")
+    print(f"Coeficiente de variacion: {medidasDV[11]}")
     print("----------------------------------------")
-    print(f"Curtosis: {medidasDV[8]}")
+    print(f"Indice de Asimetria: {medidasDV[12]}")
+    print("----------------------------------------")
+    print(f"Curtosis: {medidasDV[10]}")
     print("----------------------------------------")
 
 #
@@ -343,21 +351,24 @@ def printTable(datos):
 
 def menuFreqOpc():
     #menu de opciones
-    print(' ----------------- MENU DISTRIBUC. DE FRECUENCIAS -------------------')
+    print(' ')
+    print(' [------------------------------------------------------------]')
+    print(' ')
+    print(' [------------ MENU - DISTRIBUC. DE FRECUENCIAS --------------]')
+    print(' [------------------------------------------------------------]')
+    print(' ')
     print(' Bienvenido! Elija una de las sig. opciones: ')
     print(' --------------------------------------------')
     print('0.) Mostrar la muestra dada')
     print('1.) Generar tabla de frecuencia con los datos de la muestra')
     print('2.) Mostrar las Medidas de Tendencia Central')
     print('3.) Mostrar las Medidas de Dispersion/Variabilidad')
-    """print('4.) 4')
-    print('5.) 5')"""
     print(' ---------------------------------------')
-    resp = input('4.) Salir del menu\n')
+    resp = input('4.) Salir de este menu(volver al MAIN MENU)\n')
     if resp == '0':
         printMuestra()
         print(' --------------------------------------------------------------------')
-        opc = input('Desea volver al menu? 1)Si 2)No\n')
+        opc = input('Desea volver al menu de distribuc. de frecuencias? 1)Si 2)No\n')
         if (opc=='1'):
             menuFreqOpc()
         else:
@@ -414,19 +425,24 @@ main:
 #
 def menuPropOpc(age, income, hours):
     #menu de opciones
-    print(' ----------------- MENU PROBABILIDAD E HIPOTESIS -------------------')
+    print(' ')
+    print(' [------------------------------------------------------------]')
+    print(' ')
+    print(' [------------ MENU - PROBABILIDAD E HIPOTESIS ---------------]')
+    print(' [------------------------------------------------------------]')
+    print(' ')
     print('0.) Mostrar x')
-    print('1.) Generar tabla de frecuencia por EDAD con los datos de la BD ')
-    print('2.) Generar tabla de frecuencia por SALARIO con los datos de la BD ')
-    print('3.) Generar tabla de frecuencia por HOURS con los datos de la BD ')
+    print('1.) Generar calcs. por EDAD con los datos de la BD ')
+    print('2.) Generar calcs. por SALARIO con los datos de la BD ')
+    print('3.) Generar calcs. por HORAS DE TRABAJO con los datos de la BD ')
     print(' ---------------------------------------')
-    resp = input('4.) Salir del menu\n')
+    resp = input('4.) Salir de este menu(volver al MAIN MENU)\n')
     if resp == '0':
         #printMuestra()
         print(' --------------------------------------------------------------------')
-        opc = input('Desea volver al menu? 1)Si 2)No\n')
+        opc = input('Desea volver al menu de probab.? 1)Si 2)No\n')
         if (opc=='1'):
-            menuPropOpc()
+            menuPropOpc(age, income, hours)
         else:
             print('Cerrando...')
     elif resp == '1':
@@ -436,7 +452,7 @@ def menuPropOpc(age, income, hours):
         #NOTA!! agregar un menu para mostrar las MTC y MDD para c/u de estas
         opc = input('Desea volver al menu? 1)Si 2)No\n')
         if (opc=='1'):
-            menuPropOpc()
+            menuPropOpc(age, income, hours)
         else:
             print('Cerrando...')
     elif resp == '2': 
@@ -446,7 +462,7 @@ def menuPropOpc(age, income, hours):
         print(' --------------------------------------------------------------------')
         opc = input('Desea volver al menu? 1)Si 2)No\n')
         if (opc=='1'):
-            menuPropOpc()
+            menuPropOpc(age, income, hours)
         else:
             print('Cerrando...')
     elif resp == '3': 
@@ -455,7 +471,7 @@ def menuPropOpc(age, income, hours):
         print('-----------------------------------------')
         opc = input('Desea volver al menu? 1)Si 2)No\n')
         if (opc=='1'):
-            menuPropOpc()
+            menuPropOpc(age, income, hours)
         else:
             print('Cerrando...')
     elif resp == '4': 
@@ -464,12 +480,13 @@ def menuPropOpc(age, income, hours):
 #-------------------------------------------------------------
 #main
 def main(ageList, incomeList, hoursWkList):
-    print('[______________________________________________________________]')
     print(' ')
-    print('[_______ FREQUENCY DISTRIBUT. TABLE --- STATISTICS II _________]')
-    print('[--- (TABLA DE DISTRIBUC. DE FRECUENC.) --- ESTADIST. II ---]')
-    print('[______________________________________________________________]')
-    print(' Bienvenido! Para comenzar, elija una de las sig. opciones: ')
+    print(' _____________________________________________________________')
+    print('[                                                             ]')
+    print('[_______________ --- STATISTICS II PROGRAM --- _______________]')
+    print('[             --- (PROGRAMA DE ESTADIST. II) ---              ]')
+    print('[________________________(MAIN MENU)__________________________]')
+    print('   Bienvenido! Para comenzar, elija una de las sig. opciones: ')
     print(' --------------------------------------------')
     print('1.) Menu de distribucion de frecuencias ')
     print('2.) Menu de probabilidad e hipotesis ')
@@ -497,17 +514,33 @@ def main(ageList, incomeList, hoursWkList):
     else: print('Err0r')
     
 #
-# VARS CUANTITATIVAS
+# VARS CUANTITATIVAS ----------------------
 ageList = []
 incomeList = []
 hoursWkList = []
-# VARS CUALITATIVAS
+# VARS CUALITATIVAS ----------------------
 sexList = []
 marriedList = []
 raceList = []
 citizenUSList = []
 healthInsuranceList = []
 languageList = []
+#------------_-------------------------_-----------------
+# list(map(smt, smt2))
+
+
+"""
+For the record and the sanity of my mental health, for a piece of mind
+im gonna follow the structure in word, and go through
+1 to 4 steps of the second menu
+Now, for rn
+before those 4 step pf the secont Fase (Statis. II - Prob)
+im gonna do and end first the graphics AND THEEEEN 
+just then, gonna fix up all the mess with the menues? and stuff
+and do the rest of em
+so id be done with the Fase I and finally
+be starting the Fase II
+"""
 # ------------_-------------------------_-----------------
 if __name__ == '__main__': 
     with open("DBdatosProyecto2024.csv", newline='') as csvFile:
@@ -533,12 +566,4 @@ if __name__ == '__main__':
     tableIncome = tabla_frecuencia(incomeList)"""
     main(ageList, incomeList, hoursWkList)
 
-    
 #
-"""
-
-#CALCULOS
---------------------------------
-
---------------------------------
-"""

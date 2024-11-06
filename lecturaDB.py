@@ -2,13 +2,13 @@
 import csv
 import matplotlib.pyplot as plt
 import pandas as pd
+from repository import Graphics
 #
 # DE VARS CUANTITATIVAS
 ageList = []
 incomeList = []
 hoursWkList = []
 # VARS CUALITATIVAS
-#Race,USCitizen,HealthInsurance,Language
 sexList = []
 marriedList = []
 raceList = []
@@ -47,6 +47,10 @@ def readDB():
     print(languageList)"""
 #
 readDB()
+
+graficos = Graphics(ageList, incomeList, hoursWkList, sexList, marriedList, raceList, citizenUSList, healthInsuranceList, languageList)
+graficos.graphicGender()
+#graficos.graphicRace()
 #------------------------------------------------------
 sexM = []
 sexF = []
@@ -70,7 +74,7 @@ def graphicGender():
     plt.ylabel("Cantidad de personas")
     plt.show()
 #-------------------------------------------------------
-graphicGender()
+#graphicGender()
 #-------------------------------------------------------
 """
 plt.hist(valores)

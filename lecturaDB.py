@@ -33,7 +33,7 @@ def readDB():
                 healthInsuranceList.append(int(data[7]))
                 languageList.append(int(data[8]))
             i += 1
-    print(len(sexList))   
+    #print(len(sexList))   
     #print(min(ageList))  
     """
     print(sexList)
@@ -47,27 +47,31 @@ def readDB():
     print(languageList)"""
 #
 readDB()
+#------------------------------------------------------
 sexM = []
 sexF = []
-countF = 0
-countM = 0  
-for sex in sexList:  
-    if(sex==0):
-        countF+=1
-        sexF.append(sexList[sex])
-    else:
-        countM+=1
-        sexM.append(sexList[sex])
-    print(countF, "x" ,countM)
-bins = [-0.1, 0,1.1]
+global countF, countM
+def graphicGender():
+    countF = 0
+    countM = 0
+    for sex in sexList:  
+        if(sex==0):
+            countF+=1
+            sexF.append(sexList[sex])
+        else:
+            countM+=1
+            sexM.append(sexList[sex])
+        print(countF, "x" ,countM)
+    bins = [-0.1, 0,1.1]
 
-plt.hist([sexM, sexF], bins= bins, color={'pink','blue'})
-plt.title("Grafica de la Variable Sexo")
-plt.xlabel("0 = Masculino, 1 = Femenino")
-plt.ylabel("Cantidad de personas")
-plt.show()
-
-
+    plt.hist([sexM, sexF], bins= bins, color={'pink','blue'})
+    plt.title("Grafica de la Variable Sexo")
+    plt.xlabel("0 = Masculino, 1 = Femenino")
+    plt.ylabel("Cantidad de personas")
+    plt.show()
+#-------------------------------------------------------
+graphicGender()
+#-------------------------------------------------------
 """
 plt.hist(valores)
 print(valores)

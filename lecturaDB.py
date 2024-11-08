@@ -108,12 +108,46 @@ def graphicGender2():
 
     #plt.bar(etiquetas, listx)
     #plt.show()
+    plt.figure()
+    ax = sns.barplot(y=etiquetas, x=listx)
+    #plt.bar(etiquetas, listx)
+    #sns.barplot(etiquetas, listx)
+    #plt.bar(etiquetas, raceList)
+    
+    #plt.show()
+#---------------------------------------------------------
+def show_barplot(show=True):
+    countF = 0
+    countM = 0
+    for sex in sexList:  
+        if(sex==0):
+            countF+=1
+            sexF.append(sexList[sex])
+        else:
+            countM+=1
+            sexM.append(sexList[sex])
+        print(countF, "x" ,countM)
+    #
+    etiquetas = ['F','M']
+    listx = []
+    listx.append(countF)
+    listx.append(countM)
+    #
+    y = etiquetas
+    x = listx
+    #
+    sns.set_style('whitegrid', {'grid.linestyle': '--'})
+    ax = sns.barplot(y=x, x=y, palette = "husl", edgecolor = "black")
+    
+    if show:
+        plt.xlabel(f"| 1 = Femenino --- {countF}  || 0 = Masculino --- {countM} |")
+        plt.show(block=False)
+        plt.pause(400.01)
 
-    sns.barplot(x=listx, y=etiquetas)
-    plt.show()
+#graphicGender2()
 
+show_barplot()
 
-graphicGender2()
 #-------------------------------------------------------
 #graphicGender()
 #-------------------------------------------------------

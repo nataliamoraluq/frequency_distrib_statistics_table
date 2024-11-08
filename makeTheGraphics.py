@@ -69,7 +69,7 @@ def pieChartRace(raceList):
         plt.xlabel(f" Asian: {format((countA/len(raceList)) *100, '.2f')} %, Black: {format((countB/len(raceList)) *100, '.2f')} %, Other: {format((countO/len(raceList)) *100, '.2f')} %, White: {format((countW/len(raceList)) *100, '.2f')} % ")
         plt.legend() #legenda para q muestre de nuevo los valores q se estane valuando
         plt.show()
-pieChartRace(raceList=raceList)
+#pieChartRace(raceList=raceList)
 #-----------------------------------------
 # ------------------- PIE CHART LANGUAGE -------------------
 def pieChartLanguage(languageList):
@@ -94,16 +94,12 @@ def pieChartLanguage(languageList):
 #-----------------------------------------
 # ------------------- BAR PLOT GENDER -------------------
 #---------------------------------------------------------
-"""def genderBar(sexList, show=True):
+def genderBar(sexList, show=True):
     countF = 0
     countM = 0
     for sex in sexList:  
-        if(sex==0):
-            countF+=1
-            sexF.append(sexList[sex])
-        else:
-            countM+=1
-            sexM.append(sexList[sex])
+        if(sex==0):countF+=1
+        else:countM+=1
         print(countF, "x" ,countM)
     #
     etiquetas = ['F','M']
@@ -118,7 +114,44 @@ def pieChartLanguage(languageList):
     ax = sns.barplot(y=x, x=y, palette = "husl", edgecolor = "black")
     
     if show:
-        plt.xlabel(f"| 1 = Femenino --- {countF}  || 0 = Masculino --- {countM} |")
+        plt.xlabel(f" Feminine: {format((countF/len(sexList)) *100, '.2f')} %,  Masculine: {format((countM/len(sexList)) *100, '.2f')} %") 
         plt.show(block=False)
-        plt.pause(400.01)"""
+        plt.pause(400.01)
 #genderBar(sexList=sexList)
+#
+# ---------------------------- AGE BARS --------------------
+#
+def ageBars(ageList,show=True):
+    valores = ageList
+    sns.set_style('whitegrid', {'grid.linestyle': '--'})
+    fig, ax = plt.subplots()
+    sns.histplot(data = valores,  color = "orange")
+    #plt.hist(valores,  edgecolor = "black", color = "")
+    plt.grid(True)
+    plt.show()
+#ageBars(ageList=ageList)
+#
+
+# ---------------------------- AGE BARS --------------------
+#
+"""def hoursBars(hourList,show=True):
+    valores = hourList
+    sns.set_style('whitegrid', {'grid.linestyle': '--'})
+    fig, ax = plt.subplots()
+    sns.histplot(data = valores,  color = "skyblue")
+    #plt.hist(valores,  edgecolor = "black", color = "")
+    plt.grid(True)
+    plt.show()
+hoursBars(hourList=hoursWkList)"""
+# ---------------------------- INCOME BARS --------------------
+#
+"""
+def incomeBar(incomeList, show=True):
+    valores = incomeList
+    sns.set_style('whitegrid', {'grid.linestyle': '--'})
+    fig, ax = plt.subplots()
+    sns.histplot(data = valores,  color = "skyblue")
+    #plt.hist(valores,  edgecolor = "black", color = "")
+    plt.grid(True)
+    plt.show()
+incomeBar(incomeList=incomeList)"""

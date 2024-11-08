@@ -3,6 +3,7 @@ import csv
 import matplotlib.pyplot as plt
 import pandas as pd
 from repository import Graphics
+import seaborn as sns
 #
 # DE VARS CUANTITATIVAS
 ageList = []
@@ -47,10 +48,10 @@ def readDB():
     print(languageList)"""
 #
 readDB()
-
+"""
 graficos = Graphics(ageList, incomeList, hoursWkList, sexList, marriedList, raceList, citizenUSList, healthInsuranceList, languageList)
-graficos.graphicGender()
-#graficos.graphicRace()
+#graficos.graphicGender()
+graficos.graphicRace()"""
 #------------------------------------------------------
 sexM = []
 sexF = []
@@ -67,12 +68,52 @@ def graphicGender():
             sexM.append(sexList[sex])
         print(countF, "x" ,countM)
     bins = [-0.1, 0,1.1]
-
-    plt.hist([sexM, sexF], bins= bins, color={'pink','blue'})
+    colors = ['#f19f3c', '#de3cf1']
+    plt.hist([sexM, sexF], bins= bins, color=colors)
     plt.title("Grafica de la Variable Sexo")
     plt.xlabel("0 = Masculino, 1 = Femenino")
     plt.ylabel("Cantidad de personas")
     plt.show()
+
+
+
+def graphicGender2():
+    countF = 0
+    countM = 0
+    for sex in sexList:  
+        if(sex==0):
+            countF+=1
+            sexF.append(sexList[sex])
+        else:
+            countM+=1
+            sexM.append(sexList[sex])
+        print(countF, "x" ,countM)
+    bins = [-0.1, 0,1.1]
+    colors = ['#f19f3c', '#de3cf1']
+    """
+    cm = plt.get_cmap('turbo')
+
+    patches = plt.hist(sexList)
+
+    for j, p in enumerate(patches):
+        print(f'setting color on bar {j} ')
+        p.set_facecolor(cm(j / len(patches)))"""
+
+    etiquetas = ['M', 'F']
+    listx = []
+    listx.append(countM)
+    listx.append(countF)
+
+    print(listx)
+
+    #plt.bar(etiquetas, listx)
+    #plt.show()
+
+    sns.barplot(x=listx, y=etiquetas)
+    plt.show()
+
+
+graphicGender2()
 #-------------------------------------------------------
 #graphicGender()
 #-------------------------------------------------------

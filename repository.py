@@ -5,7 +5,6 @@ from matplotlib import cm, colormaps
 import random
 #-------------------------------------------------------
 class Graphics:
-
     #------------------------------------------------------
     def __init__(self, ageList, incomeList, hoursWkList, sexList, marriedList, raceList, citizenUSList, healthInsuranceList, languageList):
         #all read vazrs from DB list 
@@ -91,21 +90,25 @@ class Graphics:
         print(f"White: {self.whiteR}")
         # bins; to define the range of the "intervals" of the value to compare
         #
-        """plt.hist([self.asianR, self.blackR, self.otherR, self.whiteR], 
-                 bins= bins, color={'gray','orange', 'cyan', 'blue'})"""
-        paleta = random.choice(list(colormaps))
+        colores={'#f19f3c', '#de3cf1', '#7016d6', '#B4DD1E'}
+        
+        
+        """paleta = random.choice(list(colormaps))
         pprint(paleta)
         paletero = plt.get_cmap(paleta)
-        pprint(paletero)
+        pprint(paletero)"""
+
         # C = [paleta(((x-X.min())/x_span)) for x in X]
         # plot_color_gradients('Sequential (2)',
         #              ['binary', 'gist_yarg', 'gist_gray', 'gray', 'bone',
         #               'pink', 'spring', 'summer', 'autumn', 'winter', 'cool',
         #               'Wistia', 'hot', 'afmhot', 'gist_heat', 'copper'])
-        #color=paletero.
-        plt.hist(self.race)
         
 
+        plt.hist(self.race)
+        """plt.hist([self.asianR, self.blackR, self.otherR, self.whiteR], rwidth=0.8,
+                 color=colores)"""
+        #plt.invert_xaxis()
         plt.title("Grafica de la Variable Raza")
         plt.xlabel("Asian, Black, Other, White")
         plt.ylabel("Cantidad de personas")

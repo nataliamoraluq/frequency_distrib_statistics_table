@@ -2,7 +2,6 @@
 import csv
 import matplotlib.pyplot as plt
 import pandas as pd
-from repository import Graphics
 import seaborn as sns
 #
 # DE VARS CUANTITATIVAS
@@ -56,7 +55,7 @@ graficos.graphicRace()"""
 sexM = []
 sexF = []
 global countF, countM
-def graphicGender():
+"""def graphicGender():
     countF = 0
     countM = 0
     for sex in sexList:  
@@ -75,8 +74,6 @@ def graphicGender():
     plt.ylabel("Cantidad de personas")
     plt.show()
 
-
-
 def graphicGender2():
     countF = 0
     countM = 0
@@ -90,14 +87,14 @@ def graphicGender2():
         print(countF, "x" ,countM)
     bins = [-0.1, 0,1.1]
     colors = ['#f19f3c', '#de3cf1']
-    """
+    ###---------------
     cm = plt.get_cmap('turbo')
 
     patches = plt.hist(sexList)
 
     for j, p in enumerate(patches):
         print(f'setting color on bar {j} ')
-        p.set_facecolor(cm(j / len(patches)))"""
+        p.set_facecolor(cm(j / len(patches)))
 
     etiquetas = ['M', 'F']
     listx = []
@@ -114,9 +111,9 @@ def graphicGender2():
     #sns.barplot(etiquetas, listx)
     #plt.bar(etiquetas, raceList)
     
-    #plt.show()
+    #plt.show()"""
 #---------------------------------------------------------
-def show_barplot(show=True):
+def genderBar(sexList, show=True):
     countF = 0
     countM = 0
     for sex in sexList:  
@@ -143,10 +140,9 @@ def show_barplot(show=True):
         plt.xlabel(f"| 1 = Femenino --- {countF}  || 0 = Masculino --- {countM} |")
         plt.show(block=False)
         plt.pause(400.01)
+genderBar(sexList=sexList)
 
-#graphicGender2()
 
-show_barplot()
 
 #-------------------------------------------------------
 #graphicGender()

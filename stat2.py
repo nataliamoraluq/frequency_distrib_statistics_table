@@ -46,7 +46,7 @@ def tabla_frecuencia(datos):
     #print(f" k = {k}")
     #print(k)
     # 3) Calculamos el ancho de clase (h) ---> h = A (amplitud)
-    hAmplitud = round(rango / k)
+    hAmplitud = math.ceil(rango / k)
     #redondeado al entero mas proximo
     """
     print("-----------------------")

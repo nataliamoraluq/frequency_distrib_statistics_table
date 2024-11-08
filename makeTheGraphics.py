@@ -1,18 +1,6 @@
-"""#prueba lectura de datos db
-import csv
+#import
 import matplotlib.pyplot as plt
-import pandas as pd
-from repository import Graphics
 import seaborn as sns
-
-with open("DBdatosProyecto2024.csv", newline='') as csvFile:
-        spamreader = csv.reader(csvFile, delimiter=' ', quotechar=' ')
-        
-        data = sns.load_dataset('spamreader')
-
-        data.head()"""
-
-import matplotlib.pyplot as plt
 import numpy as np
 import csv
 # DE VARS CUANTITATIVAS
@@ -45,7 +33,6 @@ def readDB():
                 languageList.append(int(data[8]))
             i += 1
 readDB()
-
 #-----------------------------------------
 # ------------------- PIE CHART RACE -------------------
 def pieChartRace(raceList):
@@ -82,11 +69,9 @@ def pieChartRace(raceList):
         plt.xlabel(f" Asian: {format((countA/len(raceList)) *100, '.2f')} %, Black: {format((countB/len(raceList)) *100, '.2f')} %, Other: {format((countO/len(raceList)) *100, '.2f')} %, White: {format((countW/len(raceList)) *100, '.2f')} % ")
         plt.legend() #legenda para q muestre de nuevo los valores q se estane valuando
         plt.show()
-#pieChartRace(raceList=raceList)
-
+pieChartRace(raceList=raceList)
 #-----------------------------------------
 # ------------------- PIE CHART LANGUAGE -------------------
-
 def pieChartLanguage(languageList):
         #count each language
         countO=0
@@ -99,33 +84,41 @@ def pieChartLanguage(languageList):
         mylabels = ["Other language spoken at home", "English spoken at home"]
         myexplode = [0.025, 0.025]
         #fae350 pretty purple: #A39ED1
-        mycolors = ["#A39ED1", "#FAE350"]
+        mycolors = ["#90DCFF", "#FAE350"]
         plt.pie(y, labels = mylabels, explode = myexplode, colors = mycolors)
         ##
         plt.xlabel(f" Other: {format((countO/len(languageList)) *100, '.2f')} %, English: {format((countE/len(languageList)) *100, '.2f')} %")
         plt.legend() #legenda para q muestre de nuevo los valores q se estane valuando
         plt.show()
-pieChartLanguage(languageList=languageList)
-
-"""
-def pieChartGender(sexList):
-        #count each race
-        countF = 0
-        countM = 0
-        for sex in sexList:  
-            if(sex==0):countF+=1
-            else:countM+=1
-            #print(countF, "x" ,countM)
-        #definimos el grafico de pastel; y tendra los valores
-        #a evaluar y comparar, labels el nombre de los "intervalos" a evaluar con los valores
-        #y todo lo demas ya es estetica; espacios, colores
-        y = np.array([countF, countM])
-        mylabels = ["Female", "Male"]
-        myexplode = [0.05, 0.05]
-        #fae350 pretty purple: #A39ED1
-        mycolors = ["hotpink", "blue"]
-        #plt.pie para crear el pie con todos los elementos previamente definidos
-        plt.pie(y, labels = mylabels, explode = myexplode, colors = mycolors)
-        plt.legend() #legenda para q muestre de nuevo los valores q se estane valuando
-        plt.show()
-pieChartGender(sexList=sexList)"""
+#pieChartLanguage(languageList=languageList)
+#-----------------------------------------
+# ------------------- BAR PLOT GENDER -------------------
+#---------------------------------------------------------
+"""def genderBar(sexList, show=True):
+    countF = 0
+    countM = 0
+    for sex in sexList:  
+        if(sex==0):
+            countF+=1
+            sexF.append(sexList[sex])
+        else:
+            countM+=1
+            sexM.append(sexList[sex])
+        print(countF, "x" ,countM)
+    #
+    etiquetas = ['F','M']
+    listx = []
+    listx.append(countF)
+    listx.append(countM)
+    #
+    y = etiquetas
+    x = listx
+    #
+    sns.set_style('whitegrid', {'grid.linestyle': '--'})
+    ax = sns.barplot(y=x, x=y, palette = "husl", edgecolor = "black")
+    
+    if show:
+        plt.xlabel(f"| 1 = Femenino --- {countF}  || 0 = Masculino --- {countM} |")
+        plt.show(block=False)
+        plt.pause(400.01)"""
+#genderBar(sexList=sexList)

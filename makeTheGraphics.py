@@ -87,6 +87,7 @@ def pieChartLanguage(languageList):
         mycolors = ["#90DCFF", "#FAE350"]
         plt.pie(y, labels = mylabels, explode = myexplode, colors = mycolors)
         ##
+        #format(nro, '.2f')
         plt.xlabel(f" Other: {format((countO/len(languageList)) *100, '.2f')} %, English: {format((countE/len(languageList)) *100, '.2f')} %")
         plt.legend() #legenda para q muestre de nuevo los valores q se estane valuando
         plt.show()
@@ -129,7 +130,7 @@ def ageBars(ageList,show=True):
     #plt.hist(valores,  edgecolor = "black", color = "")
     plt.grid(True)
     plt.show()
-#ageBars(ageList=ageList)
+ageBars(ageList=ageList)
 #
 
 # ---------------------------- AGE BARS --------------------

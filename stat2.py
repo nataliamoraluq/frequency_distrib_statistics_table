@@ -1,17 +1,18 @@
-import math
+import math #IMPORTS HERE
 import csv
 import matplotlib.pyplot as plt
 #
-#
+# STATISTICS I -------------------------------------------------------------
 # tabla array vacio para los nuevos datos a guardar
 tabla = []
 #------------------------------------------------------------------
-#arrays 
+#arrays freq
 modas = [] #array modas
 mediaTot = [] #array media aritmetica
 medidasTC = [] #resultados medidas de tendencia central
 medidasDV = [] #resultados medidas de variabilidad
-#------------------------------------------------------------------      
+#------------------------------------------------------------------     
+#  
 #muestra con los datos agrupados
 datos = [
     30,46,71,66,34,95,50,69,31,55,42,65,75,77,32,87,75,89,31,54,
@@ -26,6 +27,21 @@ datos = [
     89,89,75,66,45,59,71,89,76,74,86,56,44,91,62,79,89,87,79,69
 ]
 #------------------------------------------------------------------
+#
+# FASE I Y II --- STATISTIC II
+# VARS CUANTITATIVAS ----------------------
+ageList = []
+incomeList = []
+hoursWkList = []
+# VARS CUALITATIVAS ----------------------
+sexList = []
+marriedList = []
+raceList = []
+citizenUSList = []
+healthInsuranceList = []
+languageList = []
+#
+dataProb = [] #calcs probabilidades
 #
 # ______________________ TABLA DE DISTRIBUCION DE FRECUENCIA (MAIN FUNCTION)___________________________
 def tabla_frecuencia(datos):
@@ -48,11 +64,6 @@ def tabla_frecuencia(datos):
     # 3) Calculamos el ancho de clase (h) ---> h = A (amplitud)
     hAmplitud = math.ceil(rango / k)
     #redondeado al entero mas proximo
-    """
-    print("-----------------------")
-    print(f" A = {hAmplitud}")
-    print("-----------------------")"""
-
     # 4) Se crean los límites de clase
 
     # límites de clase con intervalos cerrados a la derecha
@@ -80,7 +91,7 @@ def tabla_frecuencia(datos):
         # para la varianza
         sumfixi2 += ((fi * xi) * xi)
         # se llena el espacio donde estaran los datos y calcs de la tabla
-        datosTabla.append((limites_clase[i], limites_clase[i + 1], fi, facum, xi, mediaPerInt))
+        datosTabla.append((limites_clase[i], limites_clase[i + 1], fi, facum, xi, mediaPerInt, sumfixi2))
     #print(f"media sumada sin dividir{media}")
     #media aritmetica
     xArit = media / n
@@ -166,7 +177,87 @@ def tabla_frecuencia(datos):
     #
     #
     return datosTabla
-# ==============================================================================
+# ===============================================================================================================
+#====================================================== CALCULOS DE PROBABILIDAD ===========================================
+def metDataCalcs(listData, xArit, s):
+    #hours, medidasTC[xArit], medidasDV[sDesv]
+    n = len(listData)
+    medArit =  xArit
+    desvEst = s
+    dataProb.append(n)
+    dataProb.append(medArit)
+    dataProb.append(desvEst)
+    return dataProb
+#luego
+#en mets aparte de prob para c/u
+#CALC PROB PARA INCOME > 44
+
+#(fuera de esto en el menu) ----> dataC = metXcalc(hours, medidasTC[xArit], medidasDV[sDesv])
+    #para datacalc:
+    # n = dataCalc[0]
+    # miu = dataCalc[1]
+    # sigma = dataCalc[2]
+    #luego para este met
+    #segun la probabilidad de la variable a calcular, se tomara el valor de esa prop como X 
+    #es decir (por ejemplo si P(X > 44) then prob = 44)
+
+#
+#
+def probabIncome(dataCalc, prob):
+    #vers corregida beta2 PERO en este caso part de prob, dan valores muy altos
+    #por lo q se colocara cualquier valor para z solo para mostrar algo ok?
+    """print(f"n: {dataCalc[0]}")
+    print(f"miu: {dataCalc[1]}")
+    print(f"sigma: {dataCalc[2]}")"""
+    
+    varToZ = ((prob - (float(dataCalc[1]))) / (float(format(dataCalc[2],'.2f')) / (math.sqrt(float(dataCalc[0]) ) )))
+    #OJO vartoZ con 4 decimales
+    print(f"-----------------------------------------------------------------------------------------------")
+    print(f" Resultado del calc. de probabilidad con TLC: {format(varToZ, '.4f')}")
+    print(f"AVISO!!!")
+    print(f"En este caso particular, el valor a buscar de z en la tabla es MUY alto")
+    print(f"por ello, a fin de SOLO MOSTRAR como seria el rest del calc para la Prob de P (X > 44)")
+    print(f"se solicitara de igual forma un valor de la tabla dada en clases")
+    zValueTable = input('Ingrese el valor de equivalente en la tabla\n')
+    #zValue se se multipl por 100 para tener el valor porcentual
+    zValue = 1 - float(zValueTable)
+    print(f" zValue: {zValue}")
+    dataProb.append([(zValue*100)])
+    print(f"-----------------------------------------------------------------------------------------------")
+    print(f" n: {dataCalc[0]}")
+    print(f"miu (med. arit.): {dataCalc[1]}")
+    print(f" sigma (desviac. estand.): {dataCalc[2]}")
+    print(f"Porcentaje de prop. : {dataCalc[3]} %")
+    print(f"(recordar q este valor es HIPOTETICO y no real, no aceptado para concluir)")
+    print(f" ")
+
+"""
+version beta con errores
+def probX(dataCalc, prob):
+    #(fuera de esto en el menu) ----> dataC = metXcalc(hours, medidasTC[xArit], medidasDV[sDesv])
+    #para datacalc:
+    # n = dataCalc[0]
+    # miu = dataCalc[1]
+    # sigma = dataCalc[2]
+    #luego para este met
+    #segun la probabilidad de la variable a calcular, se tomara el valor de esa prop como X 
+    #es decir (por ejemplo si P(X > 44) then prob = 44)
+    varToZ = ((prob - (int(dataCalc[1]))) / (dataCalc[2] / (math.sqrt(dataCalc[0]))))
+    #OJO vartoZ con 4 decimales
+    print(f"-----------------------------------------------------------------------------------------------")
+    print(f" Resultado del calc. de probabilidad con TLC: {format(varToZ, '.4f')}")
+    zValue = input('Ingrese el valor de equivalente en la tabla\n')
+    #zValue se se multipl por 100 para tener el valor porcentual
+    dataProb.append([(zValue*100)])
+    print(f"-----------------------------------------------------------------------------------------------")
+    print(f" n: {dataCalc[0]}")
+    print(f"miu (med. arit.): {dataCalc[1]}")
+    print(f" sigma (desviac. estand.): {dataCalc[2]}")
+    print(f"Porcentaje de prop. : {dataCalc[3]} %")
+    print(f" ")
+"""
+                   
+#===============================================================================
 # ______________________________________ MEDIDAS DE TENDENCIA CENTRAL ______________________________________
 # ----- MET. CALCULO PUNTO MEDIO(xi = mi)- ------
 def calcPuntoMedio(li, ls): 
@@ -287,43 +378,49 @@ def printMuestra():
 # ----- MET. IMPRIMIR - MODAS------
 def printModas(medidasTC):
     for i, mod in enumerate(medidasTC[2]):
-        print(f"moda nro {i+1}: {mod}")
+        print(f"moda nro {i+1}: {format(mod, '.4f')}")
+        #format(nro, '.2f')
+        
 #
 # ----- MET. IMPRIMIR - MTC------
 #
 def printMTC(medidasTC):
-    print("----------------------------------------")
-    print(f"Media aritmetica: {medidasTC[0]}")
-    print(f"Mediana: {medidasTC[1]}")
+    #format(nro, '.4f')
+    #format(medidasTC[0], '.4f')
+    print(f"Media aritmetica: {format(medidasTC[0], '.4f')}")
+    print(f"Mediana: {format(medidasTC[1], '.4f')}")
     print(f"Modas:")
     printModas(medidasTC)
 #
 #
 # ----- MET. IMPRIMIR - MDD------
 def printMDD(medidasDV):
-    print(f"Varianza: {medidasDV[0]}")
-    print(f"Desviacion Estandar: {medidasDV[1]}")
+    #format(nro, '.4f')
+    print('----------------------------------------------------------------------')
+    print(f"Varianza: {format(medidasDV[0], '.4f')}")
+    print(f"Desviacion Estandar: {format(medidasDV[1], '.4f')}")
     print("----------------------------------------")
-    print(f"P65: {medidasDV[2]}")
+    #format(,'.4f')
+    print(f"P65: {format(medidasDV[2],'.4f')}")
     print("----------------------------------------")
-    print(f"Q1: {medidasDV[3]}")
-    print(f"Q2: {medidasDV[4]}")
+    print(f"Q1: {format(medidasDV[3],'.4f')}")
+    print(f"Q2: {format(medidasDV[4],'.4f')}")
     """"""
-    print(f"Q3: {medidasDV[5]}")
-    print(f"Q4: {medidasDV[6]}")
+    print(' ------------------------')
+    print(f"Q3: {format(medidasDV[5],'.4f')}")
+    print(f"Q4: {format(medidasDV[6],'.4f')}")
     print("----------------------------------------")
-    print(f"D3: {medidasDV[7]}")
-    print(f"D8: {medidasDV[8]}")
+    print(f"D3: {format(medidasDV[7],'.4f')}")
+    print(f"D8: {format(medidasDV[8],'.4f')}")
     print("----------------------------------------")
-    print(f"Rango Intercuartil: {medidasDV[9]}")
-    print(f"Coeficiente de variacion: {medidasDV[11]}")
+    print(f"Rango Intercuartil: {format(medidasDV[9],'.4f')}")
+    print(f"Coeficiente de variacion: {format(medidasDV[11],'.4f')}")
     print("----------------------------------------")
-    print(f"Indice de Asimetria: {medidasDV[12]}")
+    print(f"Indice de Asimetria: {format(medidasDV[12],'.4f')}")
     print("----------------------------------------")
-    print(f"Curtosis: {medidasDV[10]}")
-    print("----------------------------------------")
-
+    print(f"Curtosis: {format(medidasDV[10],'.4f')}")
 #
+# ----------------------------- PRINT FREQUENCY TABLE ----------------------------------------------
 #
 def printTable(datos):
     # Calc tabla de distribuc. frecuencia
@@ -332,22 +429,17 @@ def printTable(datos):
     """
     print("tabla posic")
     print(tabla[0][0])"""
-    print('-----------------------------------------')
-    print('   TABLA DE DISTRIBUC. DE FRECUENCIAS ')
-    print("----------------------------------------")
-    print("Intervalos| fi | fa | xi | fi * xi |")
-    print("----------------------------------------")
-    
-    for limInf, limSup, frecSim, frecAcum, puntoMedio, mediaPorInt in tabla:
-        print(f"[{limInf} - {limSup}) | {frecSim} | {frecAcum} | {puntoMedio}| {mediaPorInt} |")
+    print(' ------------------------------------------------------------------------------------------------------------------------------')
+    print('                         TABLA DE DISTRIBUC. DE FRECUENCIAS                    ')
+    print(' ------------------------------------------------------------------------------------------------------------------------------')
+    print("   Intervalos       |    fi    |    fa   |    xi    |    fi * xi    |      fi * xi2      |")
+    print(' ------------------------------------------------------------------------------------------------------------------------------')
+    for limInf, limSup, frecSim, frecAcum, puntoMedio, mediaPorInt, sumfixi2 in tabla:
+        print(f"   [{limInf} - {limSup})         {frecSim}      {frecAcum}      {puntoMedio}        {mediaPorInt}         {sumfixi2} ")
+
+    #((limites_clase[i], limites_clase[i + 1], fi, facum, xi, mediaPerInt, sumfixi2))
     print(' ')
-    #printMTC()
-    """
-    print("----------------------------------------")
-    print(f"Media aritmetica: {medidasTC[0]}")
-    print(f"Mediana: {medidasTC[1]}")
-    print(f"Modas:")
-    printModas()"""
+    print(' ------------------------------------------------------------------------------')
 
 def menuFreqOpc():
     #menu de opciones
@@ -376,7 +468,7 @@ def menuFreqOpc():
     elif resp == '1':
         printTable(datos)
         print(' --------------------------------------------------------------------')
-        opc = input('Desea volver al menu? 1)Si 2)No\n')
+        opc = input('Desea volver al menu de distribuc. de frecuencias? 1)Si 2)No\n')
         if (opc=='1'):
             menuFreqOpc()
         else:
@@ -386,11 +478,10 @@ def menuFreqOpc():
         modas.clear()
         tabla = tabla_frecuencia(datos)
         #
-        print('-----------------------------------------')
         print('   MTC - MEDIDAS DE TENDENCIA CENTRAL ')
         printMTC(medidasTC)
         print(' --------------------------------------------------------------------')
-        opc = input('Desea volver al menu? 1)Si 2)No\n')
+        opc = input('Desea volver al menu de distribuc. de frecuencias? 1)Si 2)No\n')
         if (opc=='1'):
             menuFreqOpc()
         else:
@@ -398,10 +489,10 @@ def menuFreqOpc():
     elif resp == '3': 
         #varianza()
         tabla = tabla_frecuencia(datos)
-        print('-----------------------------------------')
         print('      MDV - MEDIDAS DE VARIABILIDAD    ')
+        print(' --------------------------------------------------------------------')
         printMDD(medidasDV)
-        opc = input('Desea volver al menu? 1)Si 2)No\n')
+        opc = input('Desea volver al menu de distribuc. de frecuencias? 1)Si 2)No\n')
         if (opc=='1'):
             menuFreqOpc()
         else:
@@ -431,7 +522,7 @@ def menuPropOpc(age, income, hours):
     print(' [------------ MENU - PROBABILIDAD E HIPOTESIS ---------------]')
     print(' [------------------------------------------------------------]')
     print(' ')
-    print('0.) Mostrar x')
+    print('0.) Ver graficas de las variables')
     print('1.) Generar calcs. por EDAD con los datos de la BD ')
     print('2.) Generar calcs. por SALARIO con los datos de la BD ')
     print('3.) Generar calcs. por HORAS DE TRABAJO con los datos de la BD ')
@@ -448,9 +539,16 @@ def menuPropOpc(age, income, hours):
     elif resp == '1':
         #tabla_frecuencia(age),
         printTable(age) 
-        print(' --------------------------------------------------------------------')
+        #
+        print('   MTC - MEDIDAS DE TENDENCIA CENTRAL ')
+        print('--------------------------------------------------------------------')
+        printMTC(medidasTC)
+        print('--------------------------------------------------------------------')
+        print('      MDV - MEDIDAS DE VARIABILIDAD    ')
+        printMDD(medidasDV)
+        print('--------------------------------------------------------------------')
+        opc = input('Desea volver al menu de probab.? 1)Si 2)No\n')
         #NOTA!! agregar un menu para mostrar las MTC y MDD para c/u de estas
-        opc = input('Desea volver al menu? 1)Si 2)No\n')
         if (opc=='1'):
             menuPropOpc(age, income, hours)
         else:
@@ -459,8 +557,35 @@ def menuPropOpc(age, income, hours):
         #se llama al met principal para q cargue los datos y calcule las MTC
         printTable(income)
         #
-        print(' --------------------------------------------------------------------')
-        opc = input('Desea volver al menu? 1)Si 2)No\n')
+        print('   MTC - MEDIDAS DE TENDENCIA CENTRAL ')
+        print('--------------------------------------------------------------------')
+        printMTC(medidasTC)
+        print('--------------------------------------------------------------------')
+        print('      MDV - MEDIDAS DE VARIABILIDAD    ')
+        print('--------------------------------------------------------------------')
+        printMDD(medidasDV)
+        print('--------------------------------------------------------------------')
+        
+        #
+        opc = input('Desea ver los calcs de probabilidad de esta variable? 1)Si 2)No\n')
+        #NOTA!! agregar un menu para mostrar las MTC y MDD para c/u de estas
+        if (opc=='1'):
+            dataC = metDataCalcs(income, medidasTC[0], medidasDV[1])
+            probabIncome(dataC, 44)
+            #(fuera de esto en el menu) ----> dataC = metXcalc(hours, medidasTC[xArit], medidasDV[sDesv])
+            opc = input('Desea volver al menu de probab.? 1)Si 2)No\n')
+            if (opc=='1'):
+                menuPropOpc(age, income, hours)
+            else:
+                print('Cerrando...')
+        else:
+            print('Cerrando...')
+            opc = input('Volver al menu de probab. con otras opciones? 1)Si 2)No\n')
+            if (opc=='1'):
+                menuPropOpc(age, income, hours)
+            else:
+                print('Cerrando...')
+        opc = input('Desea volver al menu de probab.? 1)Si 2)No\n')
         if (opc=='1'):
             menuPropOpc(age, income, hours)
         else:
@@ -468,8 +593,17 @@ def menuPropOpc(age, income, hours):
     elif resp == '3': 
         #varianza()
         printTable(hours)
-        print('-----------------------------------------')
-        opc = input('Desea volver al menu? 1)Si 2)No\n')
+        #
+        print('   MTC - MEDIDAS DE TENDENCIA CENTRAL ')
+        print('--------------------------------------------------------------------')
+        printMTC(medidasTC)
+        print('--------------------------------------------------------------------')
+        print('      MDV - MEDIDAS DE VARIABILIDAD    ')
+        print('--------------------------------------------------------------------')
+        printMDD(medidasDV)
+        #
+        print('--------------------------------------------------------------------')
+        opc = input('Desea volver al menu de probab.? 1)Si 2)No\n')
         if (opc=='1'):
             menuPropOpc(age, income, hours)
         else:
@@ -481,29 +615,29 @@ def menuPropOpc(age, income, hours):
 #main
 def main(ageList, incomeList, hoursWkList):
     print(' ')
-    print(' _____________________________________________________________')
-    print('[                                                             ]')
-    print('[_______________ --- STATISTICS II PROGRAM --- _______________]')
-    print('[             --- (PROGRAMA DE ESTADIST. II) ---              ]')
-    print('[________________________(MAIN MENU)__________________________]')
-    print('   Bienvenido! Para comenzar, elija una de las sig. opciones: ')
-    print(' --------------------------------------------')
+    print(' _________________________________________________________________________________')
+    print('[                                                                                ]')
+    print('[__________________________ --- STATISTICS II PROGRAM --- _______________________]')
+    print('[                        --- (PROGRAMA DE ESTADIST. II) ---                      ]')
+    print('[__________________________________(MAIN MENU)___________________________________]')
+    print('            Bienvenido! Para comenzar, elija una de las sig. opciones:            ')
+    print(' -------------------------------------------------------------------------------')
     print('1.) Menu de distribucion de frecuencias ')
     print('2.) Menu de probabilidad e hipotesis ')
     resp = input('3.) Salir del menu\n')
     if resp == '1':
         #printMuestra()
         menuFreqOpc()
-        print(' --------------------------------------------------------------------')
-        opc = input('Desea volver al menu? 1)Si 2)No\n')
+        print(' ----------------------------------------------------------------------------')
+        opc = input('Desea volver al menu principal? 1)Si 2)No\n')
         if (opc=='1'):
             main(ageList, incomeList, hoursWkList)
         else:
             print('Cerrando...')
     elif resp == '2':
         menuPropOpc(ageList, incomeList, hoursWkList)
-        print(' --------------------------------------------------------------------')
-        opc = input('Desea volver al menu? 1)Si 2)No\n')
+        print(' ----------------------------------------------------------------------------')
+        opc = input('Desea volver al menu principal? 1)Si 2)No\n')
         if (opc=='1'):
             main(ageList, incomeList, hoursWkList)
         else:
@@ -513,18 +647,6 @@ def main(ageList, incomeList, hoursWkList):
         print('Cerrando...')
     else: print('Err0r')
     
-#
-# VARS CUANTITATIVAS ----------------------
-ageList = []
-incomeList = []
-hoursWkList = []
-# VARS CUALITATIVAS ----------------------
-sexList = []
-marriedList = []
-raceList = []
-citizenUSList = []
-healthInsuranceList = []
-languageList = []
 #------------_-------------------------_-----------------
 # list(map(smt, smt2))
 

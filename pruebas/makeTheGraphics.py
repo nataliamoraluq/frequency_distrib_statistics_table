@@ -91,6 +91,7 @@ def pieChartLanguage(languageList):
         plt.legend() #legenda para q muestre de nuevo los valores q se estane valuando
         plt.title('Language in the USA - Pie chart')
         plt.show()
+        plt.close()
 #pieChartLanguage(languageList=languageList)
 #-----------------------------------------
 # ------------------- BAR PLOT GENDER -------------------

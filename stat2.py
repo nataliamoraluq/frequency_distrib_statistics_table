@@ -361,6 +361,7 @@ def ageBars():
     plt.ylabel('Frequency')
     plt.title('Age- Histogram')
     plt.show()
+    plt.close()
 #--------------------------------------------------------------------------------------------------------------------------------
 #====================================================== CALCULOS DE PROBABILIDAD ===========================================
 # -------------------- INCOME > 44 ------------------
@@ -387,9 +388,9 @@ def probabIncomeBetween(parametros, xA, xB):
     return float(probabilidad)
 
 # --------------------- HOURS > 29.5 ----------------
-def probabHoursMayorQue(parametros, x):
+def probabHoursMayorQue(parametros, y):
     media, desvEstand = parametros
-    z = (x - media) / (desvEstand)
+    z = (y - media) / (desvEstand)
     probabilidad = 1 - stats.norm.cdf(z)
     return float(probabilidad)
 # --------------------- HOURS < 26.5 ----------------
@@ -400,20 +401,22 @@ def probabHoursMenorQue(parametros, y):
     return float(probabilidad)
 
 # --------------------- AGE < 49 ----------------
-def probabHoursMenorQue(parametros, y):
+def probabAgeMenorQue(parametros, d):
     media, desvEstand = parametros
-    z = (y - media) / (desvEstand)
+    z = (d - media) / (desvEstand)
     probabilidad = stats.norm.cdf(z)
     return float(probabilidad)
 
+#probabAgeMenorQue(parametros, y)
+#probabAgeBetween(parametros, dA, dB)
 # -------------------- 46 < AGE < 50 ------------------
-def probabAgeBetween(parametros, xA, xB):
+def probabAgeBetween(parametros, dA, dB):
     #sea xA el menor valor entre ambos valores
     #y xB > xA
     media, desvEstand = parametros
     #
-    zA = (xA - media) / (desvEstand)
-    zB = (xB - media) / (desvEstand)
+    zA = (dA - media) / (desvEstand)
+    zB = (dB - media) / (desvEstand)
     #
     probabA = stats.norm.cdf(zA)
     probabB = stats.norm.cdf(zB)
@@ -694,8 +697,84 @@ def menuPropOpc(age, income, hours):
     print(' ---------------------------------------')
     resp = input('4.) Salir de este menu(volver al MAIN MENU)\n')
     if resp == '0':
-        #printMuestra()
         print(' --------------------------------------------------------------------')
+        print('Seleccione una de las opciones para ver su grafica')
+        print('1.) variable EDAD ')
+        print('2.) variable SALARIO ')
+        print('3.) variable HORAS DE TRABAJO ')
+        print('4.) variable SEXO/GENERO ')
+        print('5.) variable ESTADO CIVIL')
+        print('6.) variable RAZA ')
+        print('7.) variable NACIONALIDAD - USA')
+        print('8.) variable SEGURO MEDICO / SEGURO DE SALUD')
+        print('9.) variable IDIOMA')
+        print(' ---------------------------------------')
+        opc = input('Opcion seleccionada: \n')
+        if (opc=='1'):
+            ageBars()
+            opc2 = input('Desea volver al menu de probab.? 1)Si 2)No\n')
+            if (opc2=='1'):
+                menuPropOpc(age, income, hours)
+            else:
+                print('Cerrando...')
+        elif (opc=='2'):
+            incomeBars()
+            opc2 = input('Desea volver al menu de probab.? 1)Si 2)No\n')
+            if (opc2=='1'):
+                menuPropOpc(age, income, hours)
+            else:
+                print('Cerrando...')
+        elif (opc=='3'):
+            hoursWorkBars()
+            opc2 = input('Desea volver al menu de probab.? 1)Si 2)No\n')
+            if (opc2=='1'):
+                menuPropOpc(age, income, hours)
+            else:
+                print('Cerrando...')
+        elif (opc=='4'):
+            genderBar(sexList=sexList)
+            opc2 = input('Desea volver al menu de probab.? 1)Si 2)No\n')
+            if (opc2=='1'):
+                menuPropOpc(age, income, hours)
+            else:
+                print('Cerrando...')
+        elif (opc=='5'):
+            marriedBar()
+            opc2 = input('Desea volver al menu de probab.? 1)Si 2)No\n')
+            if (opc2=='1'):
+                menuPropOpc(age, income, hours)
+            else:
+                print('Cerrando...')
+        elif (opc=='6'):
+            pieChartRace(raceList=raceList)
+            opc2 = input('Desea volver al menu de probab.? 1)Si 2)No\n')
+            if (opc2=='1'):
+                menuPropOpc(age, income, hours)
+            else:
+                print('Cerrando...')
+        elif (opc=='7'):
+            barsUSA()
+            opc2 = input('Desea volver al menu de probab.? 1)Si 2)No\n')
+            if (opc2=='1'):
+                menuPropOpc(age, income, hours)
+            else:
+                print('Cerrando...')
+        elif (opc=='8'):
+            healthBars()
+            opc2 = input('Desea volver al menu de probab.? 1)Si 2)No\n')
+            if (opc2=='1'):
+                menuPropOpc(age, income, hours)
+            else:
+                print('Cerrando...')
+        elif (opc=='9'):
+            pieChartLanguage(languageList=languageList)
+            opc2 = input('Desea volver al menu de probab.? 1)Si 2)No\n')
+            if (opc2=='1'):
+                menuPropOpc(age, income, hours)
+            else:
+                print('Cerrando...')
+        else:  
+            print(' --------------------------------------------------------------------')
         opc = input('Desea volver al menu de probab.? 1)Si 2)No\n')
         if (opc=='1'):
             menuPropOpc(age, income, hours)
@@ -712,6 +791,29 @@ def menuPropOpc(age, income, hours):
         print('      MDV - MEDIDAS DE VARIABILIDAD    ')
         printMDD(medidasDV)
         print('--------------------------------------------------------------------')
+        #
+        opcC = input('Desea ver los calcs de probabilidad de esta variable? 1)Si 2)No\n')
+        if (opcC=='1'):
+            med = format(medidasTC[0],'.2f')
+            desvE = format(medidasDV[1],'.2f')
+            dataProb = [float(med), float(desvE)] 
+            d = 49
+            probabilidad = probabAgeMenorQue(dataProb, d)
+            finalV = probabilidad * 100  # Multiplica por 100 antes de formatear
+            print(f" P (D < 49): ")
+            print(f"La probabilidad de que la edad de una persona sea mayor que {d} es de: {finalV:.2f}%")
+            print(f" ")
+
+            # PROP 2
+            dA = 46
+            dB = 50
+            probabilidad2 = probabAgeBetween(dataProb, dA, dB)
+            finalV2 = probabilidad2 * 100  # Multiplica por 100 antes de formatear
+            print(f" P (47 > D > 49): ")
+            print(f"La probabilidad de que la edad de una persona este entre 46 y 50 es de: {finalV2:.2f}%")
+            print(f" ")
+            #
+        #
         opc = input('Desea volver al menu de probab.? 1)Si 2)No\n')
         #NOTA!! agregar un menu para mostrar las MTC y MDD para c/u de estas
         if (opc=='1'):
@@ -731,6 +833,7 @@ def menuPropOpc(age, income, hours):
         printMDD(medidasDV)
         print('--------------------------------------------------------------------')
         #
+        #
         opc = input('Desea ver los calcs de probabilidad de esta variable? 1)Si 2)No\n')
         #NOTA!! agregar un menu para mostrar las MTC y MDD para c/u de estas
         if (opc=='1'):
@@ -747,18 +850,12 @@ def menuPropOpc(age, income, hours):
             #  # n = 100, media = 40, desviacion_estandar = 2
             xA = 47
             xB = 49
-            probabilidad = probabIncomeBetween(dataProb, xA, xB)
-            finalV = probabilidad * 100  # Multiplica por 100 antes de formatear
+            probabilidad2 = probabIncomeBetween(dataProb, xA, xB)
+            finalV2 = probabilidad2 * 100  # Multiplica por 100 antes de formatear
             print(f" P (47 > X > 49): ")
-            print(f"La probabilidad de que el salario de una persona este entre 47 y 49 es de: {finalV:.2f}%")
+            print(f"La probabilidad de que el salario de una persona este entre 47 y 49 es de: {finalV2:.2f}%")
             print(f" ")
             #
-            #(fuera de esto en el menu) ----> dataC = metXcalc(hours, medidasTC[xArit], medidasDV[sDesv])
-            opc = input('Desea volver al menu de probab.? 1)Si 2)No\n')
-            if (opc=='1'):
-                menuPropOpc(age, income, hours)
-            else:
-                print('Cerrando...')
         else:
             print('Cerrando...')
             opc = input('Volver al menu de probab. con otras opciones? 1)Si 2)No\n')
@@ -782,7 +879,30 @@ def menuPropOpc(age, income, hours):
         print('      MDV - MEDIDAS DE VARIABILIDAD    ')
         print('--------------------------------------------------------------------')
         printMDD(medidasDV)
+        print('--------------------------------------------------------------------')
         #
+        opc = input('Desea ver los calcs de probabilidad de esta variable? 1)Si 2)No\n')
+        #NOTA!! agregar un menu para mostrar las MTC y MDD para c/u de estas
+        if (opc=='1'):
+            #
+            med = format(medidasTC[0],'.2f')
+            desvE = format(medidasDV[1],'.2f')
+            dataProb = [float(med), float(desvE)]  # n = 100, media = 40, desviacion_estandar = 2
+            y = 29.5
+            probabilidad = probabHoursMayorQue(dataProb, y)
+            finalV = probabilidad * 100  # Multiplica por 100 antes de formatear
+            print(f" P (Y > 29.5): ")
+            print(f"La probabilidad de que las horas de trabajo sean mayores a {y} es de: {finalV:.2f}%")
+            print(f" ")
+            #
+            #
+            yA = 26.5
+            probabilidad2 = probabHoursMenorQue(dataProb, yA)
+            finalV2 = probabilidad2 * 100  # Multiplica por 100 antes de formatear
+            print(f" P (Y < 26.5): ")
+            print(f"La probabilidad de que las horas de trabajo sean menores a {yA} es de: {finalV2:.2f}%")
+            print(f" ")
+            #
         print('--------------------------------------------------------------------')
         opc = input('Desea volver al menu de probab.? 1)Si 2)No\n')
         if (opc=='1'):
@@ -849,10 +969,6 @@ if __name__ == '__main__':
                 languageList.append(int(data[8]))
             i += 1
     #
-    """
-    tableAge = tabla_frecuencia(ageList)
-    tableHoursOW = tabla_frecuencia(hoursWkList)
-    tableIncome = tabla_frecuencia(incomeList)"""
     main(ageList, incomeList, hoursWkList)
 
 #

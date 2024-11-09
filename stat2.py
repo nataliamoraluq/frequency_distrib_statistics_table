@@ -1,6 +1,10 @@
 import math #IMPORTS HERE
-import csv
 import matplotlib.pyplot as plt
+import csv
+import scipy.stats as stats
+import seaborn as sns
+import numpy as np
+import pandas as pd
 #
 # STATISTICS I -------------------------------------------------------------
 # tabla array vacio para los nuevos datos a guardar
@@ -41,7 +45,7 @@ citizenUSList = []
 healthInsuranceList = []
 languageList = []
 #
-dataProb = [] #calcs probabilidades
+#dataProb = [] #calcs probabilidades
 #
 # ______________________ TABLA DE DISTRIBUCION DE FRECUENCIA (MAIN FUNCTION)___________________________
 def tabla_frecuencia(datos):
@@ -178,84 +182,245 @@ def tabla_frecuencia(datos):
     #
     return datosTabla
 # ===============================================================================================================
-#====================================================== CALCULOS DE PROBABILIDAD ===========================================
-def metDataCalcs(listData, xArit, s):
-    #hours, medidasTC[xArit], medidasDV[sDesv]
-    n = len(listData)
-    medArit =  xArit
-    desvEst = s
-    dataProb.append(n)
-    dataProb.append(medArit)
-    dataProb.append(desvEst)
-    return dataProb
-#luego
-#en mets aparte de prob para c/u
-#CALC PROB PARA INCOME > 44
 
-#(fuera de esto en el menu) ----> dataC = metXcalc(hours, medidasTC[xArit], medidasDV[sDesv])
-    #para datacalc:
-    # n = dataCalc[0]
-    # miu = dataCalc[1]
-    # sigma = dataCalc[2]
-    #luego para este met
-    #segun la probabilidad de la variable a calcular, se tomara el valor de esa prop como X 
-    #es decir (por ejemplo si P(X > 44) then prob = 44)
+# ---------------------------------------- GRAFICAS STATISTICS II------------------------------------------------
 
-#
-#
-def probabIncome(dataCalc, prob):
-    #vers corregida beta2 PERO en este caso part de prob, dan valores muy altos
-    #por lo q se colocara cualquier valor para z solo para mostrar algo ok?
-    """print(f"n: {dataCalc[0]}")
-    print(f"miu: {dataCalc[1]}")
-    print(f"sigma: {dataCalc[2]}")"""
+# --------------------------- QUALITATIVE  VARS ---------------------------------------
+#-----------------------------------------
+# ------------------- PIE CHART RACE -------------------
+def pieChartRace(raceList):
+        #count each race
+        countA=0
+        countB=0
+        countO=0
+        countW=0
+        for rac in raceList:  
+            #on the (race) List done
+            #asian,black,other,white
+            if(rac=='asian'):countA+=1
+            elif(rac=='black'):countB+=1
+            elif(rac=='other'):countO+=1
+            elif(rac=='white'):countW+=1
+            else: print("error! in reading the race")
+        #definimos el grafico de pastel; y tendra los valores
+        #a evaluar y comparar, labels el nombre de los "intervalos" a evaluar con los valores
+        #y todo lo demas ya es estetica; espacios, colores
+        y = np.array([countA, countB, countO, countW])
+        mylabels = ["Asian", "Black", "Other", "White"]
+        myexplode = [0.025, 0.025, 0.025, 0.05]
+        #fae350 pretty purple: #A39ED1
+        mycolors = ["blue", "#6CDA63", "hotpink","#FAE350"]
+        #plt.pie para crear el pie con todos los elementos previamente definidos
+        plt.pie(y, labels = mylabels, explode = myexplode, colors = mycolors)
+        ##
+        #print(f"asian:{countA}")
+
+        plt.xlabel(f" Asian: {format((countA/len(raceList)) *100, '.2f')} %, Black: {format((countB/len(raceList)) *100, '.2f')} %, Other: {format((countO/len(raceList)) *100, '.2f')} %, White: {format((countW/len(raceList)) *100, '.2f')} % ")
+        plt.title('Race in USA - Pie chart')
+        plt.legend() #legenda para q muestre de nuevo los valores q se estane valuando
+        plt.show()
+#pieChartRace(raceList=raceList)
+#-----------------------------------------
+# ------------------- PIE CHART LANGUAGE -------------------
+def pieChartLanguage(languageList):
+        #count each language
+        countO=0
+        countE=0
+        for lag in languageList:  
+            if(lag==0):countO+=1
+            elif(lag==1):countE+=1
+            else: print("error! in reading the language")
+        y = np.array([countO, countE])
+        mylabels = ["Other language spoken at home", "English spoken at home"]
+        myexplode = [0.025, 0.025]
+        #fae350 pretty purple: #A39ED1
+        mycolors = ["#90DCFF", "#FAE350"]
+        plt.pie(y, labels = mylabels, explode = myexplode, colors = mycolors)
+        ##
+        #format(nro, '.2f')
+        plt.xlabel(f" Other: {format((countO/len(languageList)) *100, '.2f')} %, English: {format((countE/len(languageList)) *100, '.2f')} %")
+        plt.legend() #legenda para q muestre de nuevo los valores q se estane valuando
+        plt.title('Language in the USA - Pie chart')
+        plt.show()
+#pieChartLanguage(languageList=languageList)
+#-----------------------------------------
+# ------------------- BAR PLOT GENDER -------------------
+#---------------------------------------------------------
+def genderBar(sexList, show=True):
+    countF = 0
+    countM = 0
+    for sex in sexList:  
+        if(sex==0):countF+=1
+        else:countM+=1
+        print(countF, "x" ,countM)
+    #
+    etiquetas = ['F','M']
+    listx = []
+    listx.append(countF)
+    listx.append(countM)
+    #
+    y = etiquetas
+    x = listx
+    #
+    sns.set_style('whitegrid', {'grid.linestyle': '--'})
+    ax = sns.barplot(y=x, x=y, palette = "husl", edgecolor = "black")
     
-    varToZ = ((prob - (float(dataCalc[1]))) / (float(format(dataCalc[2],'.2f')) / (math.sqrt(float(dataCalc[0]) ) )))
-    #OJO vartoZ con 4 decimales
-    print(f"-----------------------------------------------------------------------------------------------")
-    print(f" Resultado del calc. de probabilidad con TLC: {format(varToZ, '.4f')}")
-    print(f"AVISO!!!")
-    print(f"En este caso particular, el valor a buscar de z en la tabla es MUY alto")
-    print(f"por ello, a fin de SOLO MOSTRAR como seria el rest del calc para la Prob de P (X > 44)")
-    print(f"se solicitara de igual forma un valor de la tabla dada en clases")
-    zValueTable = input('Ingrese el valor de equivalente en la tabla\n')
-    #zValue se se multipl por 100 para tener el valor porcentual
-    zValue = 1 - float(zValueTable)
-    print(f" zValue: {zValue}")
-    dataProb.append([(zValue*100)])
-    print(f"-----------------------------------------------------------------------------------------------")
-    print(f" n: {dataCalc[0]}")
-    print(f"miu (med. arit.): {dataCalc[1]}")
-    print(f" sigma (desviac. estand.): {dataCalc[2]}")
-    print(f"Porcentaje de prop. : {dataCalc[3]} %")
-    print(f"(recordar q este valor es HIPOTETICO y no real, no aceptado para concluir)")
-    print(f" ")
+    if show:
 
-"""
-version beta con errores
-def probX(dataCalc, prob):
-    #(fuera de esto en el menu) ----> dataC = metXcalc(hours, medidasTC[xArit], medidasDV[sDesv])
-    #para datacalc:
-    # n = dataCalc[0]
-    # miu = dataCalc[1]
-    # sigma = dataCalc[2]
-    #luego para este met
-    #segun la probabilidad de la variable a calcular, se tomara el valor de esa prop como X 
-    #es decir (por ejemplo si P(X > 44) then prob = 44)
-    varToZ = ((prob - (int(dataCalc[1]))) / (dataCalc[2] / (math.sqrt(dataCalc[0]))))
-    #OJO vartoZ con 4 decimales
-    print(f"-----------------------------------------------------------------------------------------------")
-    print(f" Resultado del calc. de probabilidad con TLC: {format(varToZ, '.4f')}")
-    zValue = input('Ingrese el valor de equivalente en la tabla\n')
-    #zValue se se multipl por 100 para tener el valor porcentual
-    dataProb.append([(zValue*100)])
-    print(f"-----------------------------------------------------------------------------------------------")
-    print(f" n: {dataCalc[0]}")
-    print(f"miu (med. arit.): {dataCalc[1]}")
-    print(f" sigma (desviac. estand.): {dataCalc[2]}")
-    print(f"Porcentaje de prop. : {dataCalc[3]} %")
-    print(f" ")
-"""
+        plt.xlabel(f" Feminine: {format((countF/len(sexList)) *100, '.2f')} %,  Masculine: {format((countM/len(sexList)) *100, '.2f')} %") 
+        plt.ylabel('Frequency')
+        plt.title('Gender - Histogram')
+        plt.show()
+        plt.pause(400.01)
+#
+
+#------------------------------ CIVIL STATUS BARS ---------------------------
+def marriedBar():
+    df = pd.read_csv('DBdatosProyecto2024.csv') 
+
+    sns.set_style('darkgrid', {'grid.linestyle': '--'})
+    plt.hist(df['HealthInsurance'], bins=12, color="skyblue")  
+    plt.xlim(0.0, 1.0) 
+
+    
+    plt.xlabel(f" Not married: 0,  Married: 1") 
+    plt.ylabel('Frequency')
+    plt.title('Civil status - Histogram')
+    plt.show()
+#
+#marriedBar()
+# ---------------------------- USCitizen BARS --------------------
+def barsUSA():
+    df = pd.read_csv('DBdatosProyecto2024.csv') 
+
+    sns.set_style('whitegrid', {'grid.linestyle': '--'})
+    plt.hist(df['USCitizen'], bins=12, color="purple")  
+    plt.xlim(0.0, 1.0) 
+
+    plt.xlabel('USCitizen - 0: Non citizen, 1:Citizen')
+    plt.ylabel('Frequency')
+    plt.title('USCitizen - Histogram')
+    plt.show()
+#
+
+# ---------------------------- Health Insura. BARS --------------------
+def healthBars():
+    df = pd.read_csv('DBdatosProyecto2024.csv') 
+
+    sns.set_style('darkgrid', {'grid.linestyle': '--'})
+    plt.hist(df['HealthInsurance'], bins=12, color="skyblue")  
+    plt.xlim(0.0, 1.0) 
+
+    plt.xlabel('Health Insurance - 0: No Health Insur., 1:Have Health Insur')
+    plt.ylabel('Frequency')
+    plt.title('HealthInsurance - Histogram')
+    plt.show()
+#
+
+# --------------------------------------- QUANTITATIVES VARS ---------------------------------------
+# ---------------------------- INCOME BARS --------------------
+def incomeBars():
+    df = pd.read_csv('DBdatosProyecto2024.csv') 
+
+    print(df['Income'].min())
+    print(df['Income'].max())
+
+    sns.set_style('whitegrid', {'grid.linestyle': '--'})
+    plt.hist(df['Income'], bins=12, color="orange")  
+    plt.xlim(0.0, 566.0) 
+
+    plt.xlabel('Income')
+    plt.ylabel('Frequency')
+    plt.title('Income - Histogram')
+    plt.show()
+# ---------------------------- HOURS BARS --------------------
+def hoursWorkBars():
+    df = pd.read_csv('DBdatosProyecto2024.csv') 
+
+    print(df['HoursWk'].min())
+    print(df['HoursWk'].max())
+
+    sns.set_style('whitegrid', {'grid.linestyle': '--'})
+    plt.hist(df['HoursWk'], bins=12, color="hotpink")  
+    plt.xlim(df['HoursWk'].min(), df['HoursWk'].max()) 
+
+    plt.xlabel('Hours')
+    plt.ylabel('Frequency')
+    plt.title('Hours of Work - Histogram')
+    plt.show()
+# ---------------------------- AGE BARS --------------------
+def ageBars():
+    df = pd.read_csv('DBdatosProyecto2024.csv')
+
+    print(df['Age'].min())
+    print(df['Age'].max())
+
+    sns.set_style('whitegrid', {'grid.linestyle': '--'})
+    plt.hist(df['Age'], color='green') 
+    plt.xlabel('Age')
+    plt.ylabel('Frequency')
+    plt.title('Age- Histogram')
+    plt.show()
+#--------------------------------------------------------------------------------------------------------------------------------
+#====================================================== CALCULOS DE PROBABILIDAD ===========================================
+# -------------------- INCOME > 44 ------------------
+def probabIncomeMayorQue(parametros, x):
+    media, desvEstand = parametros
+    z = (x - media) / (desvEstand)
+    probabilidad = 1 - stats.norm.cdf(z)
+    return float(probabilidad)
+
+# -------------------- 47 < INCOME < 49 ------------------
+def probabIncomeBetween(parametros, xA, xB):
+    #sea xA el menor valor entre ambos valores
+    #y xB > xA
+    media, desvEstand = parametros
+    #
+    zA = (xA - media) / (desvEstand)
+    zB = (xB - media) / (desvEstand)
+    #
+    probabA = stats.norm.cdf(zA)
+    probabB = stats.norm.cdf(zB)
+    #
+    probabilidad = probabB - probabA
+    #
+    return float(probabilidad)
+
+# --------------------- HOURS > 29.5 ----------------
+def probabHoursMayorQue(parametros, x):
+    media, desvEstand = parametros
+    z = (x - media) / (desvEstand)
+    probabilidad = 1 - stats.norm.cdf(z)
+    return float(probabilidad)
+# --------------------- HOURS < 26.5 ----------------
+def probabHoursMenorQue(parametros, y):
+    media, desvEstand = parametros
+    z = (y - media) / (desvEstand)
+    probabilidad = stats.norm.cdf(z)
+    return float(probabilidad)
+
+# --------------------- AGE < 49 ----------------
+def probabHoursMenorQue(parametros, y):
+    media, desvEstand = parametros
+    z = (y - media) / (desvEstand)
+    probabilidad = stats.norm.cdf(z)
+    return float(probabilidad)
+
+# -------------------- 46 < AGE < 50 ------------------
+def probabAgeBetween(parametros, xA, xB):
+    #sea xA el menor valor entre ambos valores
+    #y xB > xA
+    media, desvEstand = parametros
+    #
+    zA = (xA - media) / (desvEstand)
+    zB = (xB - media) / (desvEstand)
+    #
+    probabA = stats.norm.cdf(zA)
+    probabB = stats.norm.cdf(zB)
+    #
+    probabilidad = probabB - probabA
+    #
+    return float(probabilidad)
                    
 #===============================================================================
 # ______________________________________ MEDIDAS DE TENDENCIA CENTRAL ______________________________________
@@ -565,13 +730,29 @@ def menuPropOpc(age, income, hours):
         print('--------------------------------------------------------------------')
         printMDD(medidasDV)
         print('--------------------------------------------------------------------')
-        
         #
         opc = input('Desea ver los calcs de probabilidad de esta variable? 1)Si 2)No\n')
         #NOTA!! agregar un menu para mostrar las MTC y MDD para c/u de estas
         if (opc=='1'):
-            dataC = metDataCalcs(income, medidasTC[0], medidasDV[1])
-            probabIncome(dataC, 44)
+            #
+            med = format(medidasTC[0],'.2f')
+            desvE = format(medidasDV[1],'.2f')
+            dataProb = [float(med), float(desvE)]  # n = 100, media = 40, desviacion_estandar = 2
+            x = 44
+            probabilidad = probabIncomeMayorQue(dataProb, x)
+            finalV = probabilidad * 100  # Multiplica por 100 antes de formatear
+            print(f" P (X > 44): ")
+            print(f"La probabilidad de que el salario de una persona sea mayor que {x} es de: {finalV:.2f}%")
+            print(f" ")
+            #  # n = 100, media = 40, desviacion_estandar = 2
+            xA = 47
+            xB = 49
+            probabilidad = probabIncomeBetween(dataProb, xA, xB)
+            finalV = probabilidad * 100  # Multiplica por 100 antes de formatear
+            print(f" P (47 > X > 49): ")
+            print(f"La probabilidad de que el salario de una persona este entre 47 y 49 es de: {finalV:.2f}%")
+            print(f" ")
+            #
             #(fuera de esto en el menu) ----> dataC = metXcalc(hours, medidasTC[xArit], medidasDV[sDesv])
             opc = input('Desea volver al menu de probab.? 1)Si 2)No\n')
             if (opc=='1'):
@@ -649,20 +830,6 @@ def main(ageList, incomeList, hoursWkList):
     
 #------------_-------------------------_-----------------
 # list(map(smt, smt2))
-
-
-"""
-For the record and the sanity of my mental health, for a piece of mind
-im gonna follow the structure in word, and go through
-1 to 4 steps of the second menu
-Now, for rn
-before those 4 step pf the secont Fase (Statis. II - Prob)
-im gonna do and end first the graphics AND THEEEEN 
-just then, gonna fix up all the mess with the menues? and stuff
-and do the rest of em
-so id be done with the Fase I and finally
-be starting the Fase II
-"""
 # ------------_-------------------------_-----------------
 if __name__ == '__main__': 
     with open("DBdatosProyecto2024.csv", newline='') as csvFile:

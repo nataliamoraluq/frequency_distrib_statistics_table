@@ -1,5 +1,6 @@
 #import
 import matplotlib.pyplot as plt
+import pandas as pd
 import seaborn as sns
 import numpy as np
 import csv
@@ -33,6 +34,7 @@ def readDB():
                 languageList.append(int(data[8]))
             i += 1
 readDB()
+# --------------------------- QUALITATIVE  VARS ---------------------------------------
 #-----------------------------------------
 # ------------------- PIE CHART RACE -------------------
 def pieChartRace(raceList):
@@ -61,12 +63,9 @@ def pieChartRace(raceList):
         plt.pie(y, labels = mylabels, explode = myexplode, colors = mycolors)
         ##
         #print(f"asian:{countA}")
-        """format((countA/len(raceList)) *100, '.2f')
-        format((countB/len(raceList)) *100, '.2f')
-        format((countO/len(raceList)) *100, '.2f')
-        format((countW/len(raceList)) *100, '.2f')"""
 
         plt.xlabel(f" Asian: {format((countA/len(raceList)) *100, '.2f')} %, Black: {format((countB/len(raceList)) *100, '.2f')} %, Other: {format((countO/len(raceList)) *100, '.2f')} %, White: {format((countW/len(raceList)) *100, '.2f')} % ")
+        plt.title('Race in USA - Pie chart')
         plt.legend() #legenda para q muestre de nuevo los valores q se estane valuando
         plt.show()
 #pieChartRace(raceList=raceList)
@@ -90,6 +89,7 @@ def pieChartLanguage(languageList):
         #format(nro, '.2f')
         plt.xlabel(f" Other: {format((countO/len(languageList)) *100, '.2f')} %, English: {format((countE/len(languageList)) *100, '.2f')} %")
         plt.legend() #legenda para q muestre de nuevo los valores q se estane valuando
+        plt.title('Language in the USA - Pie chart')
         plt.show()
 #pieChartLanguage(languageList=languageList)
 #-----------------------------------------
@@ -115,44 +115,99 @@ def genderBar(sexList, show=True):
     ax = sns.barplot(y=x, x=y, palette = "husl", edgecolor = "black")
     
     if show:
+
         plt.xlabel(f" Feminine: {format((countF/len(sexList)) *100, '.2f')} %,  Masculine: {format((countM/len(sexList)) *100, '.2f')} %") 
-        plt.show(block=False)
+        plt.ylabel('Frequency')
+        plt.title('Gender - Histogram')
+        plt.show()
         plt.pause(400.01)
-#genderBar(sexList=sexList)
-#
-# ---------------------------- AGE BARS --------------------
-#
-def ageBars(ageList,show=True):
-    valores = ageList
-    sns.set_style('whitegrid', {'grid.linestyle': '--'})
-    fig, ax = plt.subplots()
-    sns.histplot(data = valores,  color = "orange")
-    #plt.hist(valores,  edgecolor = "black", color = "")
-    plt.grid(True)
-    plt.show()
-ageBars(ageList=ageList)
 #
 
-# ---------------------------- AGE BARS --------------------
-#
-"""def hoursBars(hourList,show=True):
-    valores = hourList
-    sns.set_style('whitegrid', {'grid.linestyle': '--'})
-    fig, ax = plt.subplots()
-    sns.histplot(data = valores,  color = "skyblue")
-    #plt.hist(valores,  edgecolor = "black", color = "")
-    plt.grid(True)
+#------------------------------ CIVIL STATUS BARS ---------------------------
+def marriedBar():
+    df = pd.read_csv('DBdatosProyecto2024.csv') 
+
+    sns.set_style('darkgrid', {'grid.linestyle': '--'})
+    plt.hist(df['HealthInsurance'], bins=12, color="skyblue")  
+    plt.xlim(0.0, 1.0) 
+
+    
+    plt.xlabel(f" Not married: 0,  Married: 1") 
+    plt.ylabel('Frequency')
+    plt.title('Civil status - Histogram')
     plt.show()
-hoursBars(hourList=hoursWkList)"""
+#
+#marriedBar()
+# ---------------------------- USCitizen BARS --------------------
+def barsUSA():
+    df = pd.read_csv('DBdatosProyecto2024.csv') 
+
+    sns.set_style('whitegrid', {'grid.linestyle': '--'})
+    plt.hist(df['USCitizen'], bins=12, color="purple")  
+    plt.xlim(0.0, 1.0) 
+
+    plt.xlabel('USCitizen - 0: Non citizen, 1:Citizen')
+    plt.ylabel('Frequency')
+    plt.title('USCitizen - Histogram')
+    plt.show()
+#
+
+# ---------------------------- Health Insura. BARS --------------------
+def healthBars():
+    df = pd.read_csv('DBdatosProyecto2024.csv') 
+
+    sns.set_style('darkgrid', {'grid.linestyle': '--'})
+    plt.hist(df['HealthInsurance'], bins=12, color="skyblue")  
+    plt.xlim(0.0, 1.0) 
+
+    plt.xlabel('Health Insurance - 0: No Health Insur., 1:Have Health Insur')
+    plt.ylabel('Frequency')
+    plt.title('HealthInsurance - Histogram')
+    plt.show()
+#
+
+# --------------------------------------- QUANTITATIVES VARS ---------------------------------------
 # ---------------------------- INCOME BARS --------------------
-#
-"""
-def incomeBar(incomeList, show=True):
-    valores = incomeList
+def incomeBars():
+    df = pd.read_csv('DBdatosProyecto2024.csv') 
+
+    print(df['Income'].min())
+    print(df['Income'].max())
+
     sns.set_style('whitegrid', {'grid.linestyle': '--'})
-    fig, ax = plt.subplots()
-    sns.histplot(data = valores,  color = "skyblue")
-    #plt.hist(valores,  edgecolor = "black", color = "")
-    plt.grid(True)
+    plt.hist(df['Income'], bins=12, color="orange")  
+    plt.xlim(0.0, 566.0) 
+
+    plt.xlabel('Income')
+    plt.ylabel('Frequency')
+    plt.title('Income - Histogram')
     plt.show()
-incomeBar(incomeList=incomeList)"""
+# ---------------------------- HOURS BARS --------------------
+def hoursWorkBars():
+    df = pd.read_csv('DBdatosProyecto2024.csv') 
+
+    print(df['HoursWk'].min())
+    print(df['HoursWk'].max())
+
+    sns.set_style('whitegrid', {'grid.linestyle': '--'})
+    plt.hist(df['HoursWk'], bins=12, color="hotpink")  
+    plt.xlim(df['HoursWk'].min(), df['HoursWk'].max()) 
+
+    plt.xlabel('Hours')
+    plt.ylabel('Frequency')
+    plt.title('Hours of Work - Histogram')
+    plt.show()
+# ---------------------------- AGE BARS --------------------
+def ageBars():
+    df = pd.read_csv('DBdatosProyecto2024.csv')
+
+    print(df['Age'].min())
+    print(df['Age'].max())
+
+    sns.set_style('whitegrid', {'grid.linestyle': '--'})
+    plt.hist(df['Age'], color='green') 
+    plt.xlabel('Age')
+    plt.ylabel('Frequency')
+    plt.title('Age- Histogram')
+    plt.show()
+
